@@ -21,5 +21,6 @@ namespace ClinicManager.Domain.Entities
         public Address Address { get; private set; }
         public string MedicalSpecialty { get; private set; }
         public string CRM { get; private set; }
+        public List<MedicalCare> MedicalCares { get; private set; }
     }
 }

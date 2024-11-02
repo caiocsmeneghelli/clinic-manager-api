@@ -21,5 +21,6 @@ namespace ClinicManager.Domain.Entities
         public decimal Weight { get; private set; }
         public PersonDetail PersonDetail { get; private set; }
         public Address Address { get; private set; }
+        public List<MedicalCare> MedicalCares { get; set; }
     }
 }

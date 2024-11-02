@@ -20,8 +20,11 @@ namespace ClinicManager.Domain.Entities
         }
 
         public int IdPatient { get; private set; }
+        public Patient Patient { get; private set; }
         public int IdDoctor { get; private set; }
+        public Doctor Doctor { get; private set; }
         public int IdService { get; private set; }
+        public Service Service { get; private set; }
         public string HealthInsurance { get; private set; }
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
