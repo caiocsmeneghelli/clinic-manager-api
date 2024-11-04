@@ -1,6 +1,7 @@
 ﻿using ClinicManager.Application.Results;
 using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
+using ClinicManager.Domain.ValueObjects;
 using FluentValidation;
 using MediatR;
 using System;
@@ -25,10 +26,20 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
 
         public async Task<Result> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
         {
-            // Validate
-            var personInfo = request.ReturnPersonDetail();
-            var address = request.ReturnAddress();
-            var doctor = new Doctor(personInfo, address, request.MedicalEspeciality, request.CRM);
+            var validationResult = _validator.Validate(request);
+            if (validationResult.IsValid == false) {
+                List<string> errors = validationResult.Errors
+                        .Select(reg => reg.ErrorMessage)
+                        .ToList();
+                return Result.BadRequest(errors);
+            }
+
+            PersonDetail personDetail = request.ReturnPersonDetail();
+            Address address = request.ReturnAddress();
+            var doctor = new Doctor(personDetail, address, request.MedicalEspeciality, request.CRM);
+
+            await _unitOfWork.Doctors.CreateAsync(doctor);
+            await _unitOfWork.CompleteAsync();
 
             return Result.Success();
         }
