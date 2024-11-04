@@ -8,11 +8,11 @@ namespace ClinicManager.Domain.ValueObjects
 {
     public record PersonDetail
     {
-        public PersonDetail(string name, string surname, DateTime birthDate, 
+        public PersonDetail(string firstName, string lastName, DateTime birthDate, 
             string phoneNumber, string email, string cPF, string bloodType)
         {
-            Name = name;
-            Surname = surname;
+            FirstName = firstName;
+            LastName = lastName;
             BirthDate = birthDate;
             PhoneNumber = phoneNumber;
             Email = email;
@@ -20,8 +20,8 @@ namespace ClinicManager.Domain.ValueObjects
             BloodType = bloodType;
         }
 
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
         public DateTime BirthDate { get; private set; }
         public string PhoneNumber { get; private set; }
         public string Email { get; private set; }
