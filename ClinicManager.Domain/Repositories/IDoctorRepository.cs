@@ -13,5 +13,6 @@ namespace ClinicManager.Domain.Repositories
         Task<Doctor?> GetByIdAsync(int idDoctor);
         Task<Doctor?> GetByIdAsNoTrackingAsync(int idDoctor);
         Task<Doctor?> GetByIdWithMedicalCareAsync(int idDoctor);
+        Task<List<Doctor>> GetAllAsync();
     }
 }
