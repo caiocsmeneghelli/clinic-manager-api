@@ -1,10 +1,7 @@
 ﻿using ClinicManager.Application.Commands.Doctors.CreateDoctor;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentValidation;
+using ClinicManager.Domain.Entities;
 
 namespace ClinicManager.Application
 {
@@ -13,9 +10,8 @@ namespace ClinicManager.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services
-                .AddMediator(); 
-                //.AddValidation();
-            //.AddAutoMapper()
+                .AddMediator()
+                .AddValidation();
             return services;
         }
 
@@ -25,10 +21,10 @@ namespace ClinicManager.Application
             return service;
         }
 
-        //private static IServiceCollection AddValidation(this IServiceCollection service)
-        //{
-        //    service.AddValidatorsFromAssemblyContaining<CreateDoctorCommandValidator>();
-        //    return service;
-        //}
+        private static IServiceCollection AddValidation(this IServiceCollection service)
+        {
+            service.AddValidatorsFromAssemblyContaining<CreateDoctorCommandValidator>();
+            return service;
+        }
     }
 }
