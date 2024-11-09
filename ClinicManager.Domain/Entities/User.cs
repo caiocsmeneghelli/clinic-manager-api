@@ -19,5 +19,11 @@ namespace ClinicManager.Domain.Entities
         public string Login { get; private set; }
         public string Password { get; private set; }
         public EProfile Profile { get; private set; }
+        public DateTime? LastLogin { get; private set; }
+
+        public void Login()
+        {
+            LastLogin = DateTime.Now;
+        }
     }
 }

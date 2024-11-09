@@ -12,6 +12,7 @@ namespace ClinicManager.Domain.UnitOfWork
         // repositories
         IPatientRepository Patients { get; }
         IDoctorRepository Doctors { get; }
+        IUserRepository Users { get; }
 
 
         Task<int> CompleteAsync();

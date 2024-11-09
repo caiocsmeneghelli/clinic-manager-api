@@ -30,6 +30,9 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
         public string CRM { get; set; }
         public string MedicalEspeciality { get; set; }
 
+        // User
+        public string UserLogin { get; private set; }
+
         public PersonDetail ReturnPersonDetail()
         {
             return new PersonDetail(Name, LastName, Birthdate, PhoneNumber, Email, BloodType, Cpf);

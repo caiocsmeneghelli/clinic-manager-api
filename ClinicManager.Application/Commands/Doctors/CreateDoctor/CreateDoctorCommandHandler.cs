@@ -34,12 +34,21 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
                 return Result.BadRequest(errors);
             }
 
+            // User
+            await _unitOfWork.BeginTransaction();
+            
+            var user = new User(request.UserLogin, "Password", Domain.Enums.EProfile.Doctor);
+            int idUser = await _unitOfWork.Users.CreateAsync(user);
+            await _unitOfWork.CompleteAsync();
+
             PersonDetail personDetail = request.ReturnPersonDetail();
             Address address = request.ReturnAddress();
-            var doctor = new Doctor(personDetail, address, request.MedicalEspeciality, request.CRM);
+            var doctor = new Doctor(personDetail, address, request.MedicalEspeciality, request.CRM, idUser);
 
             await _unitOfWork.Doctors.CreateAsync(doctor);
             await _unitOfWork.CompleteAsync();
+
+            await _unitOfWork.CommitAsync();
 
             return Result.Success();
         }
