@@ -1,4 +1,5 @@
-﻿using ClinicManager.Domain.Entities;
+﻿using ClinicManager.Application.Results;
+using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Queries.Doctors.GetAll
 {
-    public class GetAllDoctorsQueryHandler : IRequestHandler<GetAllDoctorsQuery, List<Doctor>>
+    public class GetAllDoctorsQueryHandler : IRequestHandler<GetAllDoctorsQuery, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
         public GetAllDoctorsQueryHandler(IUnitOfWork unitOfWork)
@@ -17,10 +18,10 @@ namespace ClinicManager.Application.Queries.Doctors.GetAll
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<Doctor>> Handle(GetAllDoctorsQuery request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(GetAllDoctorsQuery request, CancellationToken cancellationToken)
         {
             var result = await _unitOfWork.Doctors.GetAllAsync();
-            return result;
+            return Result.Success(result);
         }
     }
 }
