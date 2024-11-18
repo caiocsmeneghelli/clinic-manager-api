@@ -34,8 +34,7 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
                 return Result.BadRequest(errors);
             }
 
-            // User
-            await _unitOfWork.BeginTransaction();
+            await _unitOfWork.BeginTransaction();   
             
             var user = new User(request.UserLogin, "Password", Domain.Enums.EProfile.Doctor);
             int idUser = await _unitOfWork.Users.CreateAsync(user);

@@ -11,12 +11,12 @@ namespace ClinicManager.Domain.Entities
     {
         public User(string login, string password, EProfile profile)
         {
-            Login = login;
+            UserLogin = login;
             Password = password;
             Profile = profile;
         }
 
-        public string Login { get; private set; }
+        public string UserLogin { get; private set; }
         public string Password { get; private set; }
         public EProfile Profile { get; private set; }
         public DateTime? LastLogin { get; private set; }

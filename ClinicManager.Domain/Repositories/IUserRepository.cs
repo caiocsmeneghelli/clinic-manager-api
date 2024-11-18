@@ -10,6 +10,7 @@ namespace ClinicManager.Domain.Repositories
     public interface IUserRepository
     {
         Task<User?> GetByIdAsync(int id);
+        Task<User?> GetByLogin(string login);
         Task<int> CreateAsync(User user);
     }
 }

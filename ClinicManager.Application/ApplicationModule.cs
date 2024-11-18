@@ -1,13 +1,14 @@
 ﻿using ClinicManager.Application.Commands.Doctors.CreateDoctor;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
-using ClinicManager.Domain.Entities;
+using Microsoft.Extensions.Configuration;
+using ClinicManager.Application.Config;
 
 namespace ClinicManager.Application
 {
     public static class ApplicationModule
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
             services
                 .AddMediator()
