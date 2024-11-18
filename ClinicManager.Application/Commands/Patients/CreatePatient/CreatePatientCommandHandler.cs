@@ -1,5 +1,6 @@
 ﻿using ClinicManager.Application.Results;
 using ClinicManager.Domain.Entities;
+using ClinicManager.Domain.Services.Users;
 using ClinicManager.Domain.UnitOfWork;
 using ClinicManager.Domain.ValueObjects;
 using FluentValidation;
@@ -15,12 +16,14 @@ namespace ClinicManager.Application.Commands.Patients.CreatePatient
     public class CreatePatientCommandHandler : IRequestHandler<CreatePatientCommand, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
         private readonly IValidator<CreatePatientCommand> _validator;
 
-        public CreatePatientCommandHandler(IUnitOfWork unitOfWork, IValidator<CreatePatientCommand> validator)
+        public CreatePatientCommandHandler(IUnitOfWork unitOfWork, IValidator<CreatePatientCommand> validator, IUserService userService)
         {
             _unitOfWork = unitOfWork;
             _validator = validator;
+            _userService = userService;
         }
 
         public async Task<Result> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
@@ -34,9 +37,15 @@ namespace ClinicManager.Application.Commands.Patients.CreatePatient
                 return Result.BadRequest(errors);
             }
 
+            var user = await _userService.CreateUserAndValidateLogin(request.UserLogin, Domain.Enums.EProfile.Patient);
+            if (user is null) { return Result.BadRequest("Login de usuário ja existente."); }
+
+            int idUser = await _unitOfWork.Users.CreateAsync(user);
+            await _unitOfWork.CompleteAsync();
+
             PersonDetail personDetail = request.ReturnPersonDetail();
             Address address = request.ReturnAddress();
-            var patient = new Patient(request.Height, request.Weight, personDetail, address);
+            var patient = new Patient(request.Height, request.Weight, personDetail, address, idUser);
 
             await _unitOfWork.Patients.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();

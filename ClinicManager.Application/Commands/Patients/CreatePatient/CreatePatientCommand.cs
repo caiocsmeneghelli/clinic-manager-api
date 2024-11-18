@@ -30,6 +30,9 @@ namespace ClinicManager.Application.Commands.Patients.CreatePatient
         public decimal Height { get; set; }
         public decimal Weight { get; set; }
 
+        // User
+        public string UserLogin { get; set; }
+
         public PersonDetail ReturnPersonDetail()
         {
             return new PersonDetail(Name, LastName, Birthdate, PhoneNumber, Email, BloodType, Cpf);
