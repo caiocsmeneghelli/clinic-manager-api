@@ -1,13 +1,8 @@
 ﻿using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.Enums;
+using ClinicManager.Domain.Services.Auth;
 using ClinicManager.Domain.UnitOfWork;
-using ClinicManager.Infrastructure.Auth;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClinicManager.Domain.Services.Users
 {
