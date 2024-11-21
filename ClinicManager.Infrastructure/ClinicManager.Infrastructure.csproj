@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ClinicManager.Domain\ClinicManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Repositories\" />
+  </ItemGroup>
+
 </Project>
