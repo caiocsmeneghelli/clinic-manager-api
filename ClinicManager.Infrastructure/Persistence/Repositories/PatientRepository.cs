@@ -1,5 +1,7 @@
 ﻿using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.Repositories;
+using ClinicManager.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +12,44 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
 {
     public class PatientRepository : IPatientRepository
     {
-        public Task<int> CreateAsync(Patient patient)
+        private readonly ClinicManagerDbContext _context;
+
+        public PatientRepository(ClinicManagerDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<List<Doctor>> GetAllAsync()
+        public async Task<int> CreateAsync(Patient patient)
         {
-            throw new NotImplementedException();
+            await _context.Patients.AddAsync(patient);
+            return patient.Id;
         }
 
-        public Task<Patient?> GetByIdAsNoTrackingAsync(int idPatient)
+        public async Task<List<Patient>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Patients.ToListAsync();
         }
 
-        public Task<Patient?> GetByIdAsync(int idPatient)
+        public async Task<Patient?> GetByIdAsNoTrackingAsync(int idPatient)
         {
-            throw new NotImplementedException();
+            return await _context
+                .Patients
+                .AsNoTracking()
+                .SingleOrDefaultAsync(reg => reg.Id == idPatient);
         }
 
-        public Task<Patient?> GetByIdWithMedicalCareAsync(int idPatient)
+        public async Task<Patient?> GetByIdAsync(int idPatient)
         {
-            throw new NotImplementedException();
+            return await _context
+                .Patients
+                .SingleOrDefaultAsync(reg => reg.Id == idPatient);
+        }
+
+        public async Task<Patient?> GetByIdWithMedicalCareAsync(int idPatient)
+        {
+            return await _context
+                 .Patients
+                 .SingleOrDefaultAsync(reg => reg.Id == idPatient);
         }
     }
 }
