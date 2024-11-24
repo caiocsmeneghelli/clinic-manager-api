@@ -1,5 +1,6 @@
 ﻿using ClinicManager.Domain.Repositories;
 using ClinicManager.Domain.UnitOfWork;
+using ClinicManager.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace ClinicManager.Infrastructure.Persistence.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork(IPatientRepository patients, IDoctorRepository doctors, IUserRepository users)
+        public UnitOfWork(IPatientRepository patients, IDoctorRepository doctors,
+            IUserRepository users, ClinicManagerDbContext context)
         {
             Patients = patients;
             Doctors = doctors;
             Users = users;
+            _context = context;
         }
 
         public IPatientRepository Patients { get; }
@@ -23,6 +26,7 @@ namespace ClinicManager.Infrastructure.Persistence.UnitOfWork
         public IDoctorRepository Doctors {get;}
 
         public IUserRepository Users {get;}
+        public readonly ClinicManagerDbContext _context;
 
         private IDbContextTransaction _transaction;
 

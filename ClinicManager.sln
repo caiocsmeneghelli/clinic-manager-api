@@ -4,12 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicManager.API", "ClinicManager.API\ClinicManager.API.csproj", "{C71B3BAD-2F9B-4747-80BD-C2E6B2999179}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A85C9295-DBF9-4DDA-8AFA-20560162EDC8} = {A85C9295-DBF9-4DDA-8AFA-20560162EDC8}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicManager.Domain", "ClinicManager.Domain\ClinicManager.Domain.csproj", "{5A579547-D861-4EE0-B981-F6414C468307}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicManager.Application", "ClinicManager.Application\ClinicManager.Application.csproj", "{BC3F4B59-0BF7-484E-9C12-7A16727699B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicManager.Infrastructure", "ClinicManager.Infrastructure\ClinicManager.Infrastructure.csproj", "{A85C9295-DBF9-4DDA-8AFA-20560162EDC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClinicManager.Infrastructure", "ClinicManager.Infrastructure\ClinicManager.Infrastructure.csproj", "{A85C9295-DBF9-4DDA-8AFA-20560162EDC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
