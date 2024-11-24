@@ -15,7 +15,7 @@ namespace ClinicManager.Infrastructure.Persistence.Context
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
-        public ClinicManagerDbContext(DbContextOptions options) : base(options)
+        public ClinicManagerDbContext(DbContextOptions<ClinicManagerDbContext> options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
