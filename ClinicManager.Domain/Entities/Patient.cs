@@ -9,6 +9,8 @@ namespace ClinicManager.Domain.Entities
 {
     public class Patient : Entity
     {
+        public Patient()
+        { }
         public Patient(decimal height, decimal weight, PersonDetail personDetail, Address address, int idUser)
         {
             Height = height;
@@ -22,7 +24,7 @@ namespace ClinicManager.Domain.Entities
         public decimal Weight { get; private set; }
         public PersonDetail PersonDetail { get; private set; }
         public Address Address { get; private set; }
-        public List<MedicalCare> MedicalCares { get; set; }
+        //public List<MedicalCare> MedicalCares { get; set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
     }

@@ -18,6 +18,9 @@ namespace ClinicManager.Infrastructure.Persistence.Configurations
             builder.HasOne(reg => reg.User)
                 .WithMany()
                 .HasForeignKey(reg => reg.IdUser);
+
+            builder.OwnsOne(reg => reg.Address);
+            builder.OwnsOne(reg => reg.PersonDetail);
         }
     }
 }

@@ -9,20 +9,24 @@ namespace ClinicManager.Domain.Entities
 {
     public class Doctor : Entity
     {
-        public Doctor(PersonDetail personDetail, Address address, string medicalSpecialty, string crm, int idUser)
+        public Doctor()
+        { }
+
+        public Doctor(string medicalSpecialty, string crm, int idUser,
+            PersonDetail personDetail, Address address)
         {
-            PersonDetail = personDetail;
-            Address = address;
             MedicalSpecialty = medicalSpecialty;
             CRM = crm;
             IdUser = idUser;
+            PersonDetail = personDetail;
+            Address = address;
         }
 
         public PersonDetail PersonDetail { get; private set; }
         public Address Address { get; private set; }
         public string MedicalSpecialty { get; private set; }
         public string CRM { get; private set; }
-        public List<MedicalCare> MedicalCares { get; private set; }
+        //public List<MedicalCare> MedicalCares { get; private set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
     }

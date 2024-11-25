@@ -48,7 +48,9 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
 
             PersonDetail personDetail = request.ReturnPersonDetail();
             Address address = request.ReturnAddress();
-            var doctor = new Doctor(personDetail, address, request.MedicalEspeciality, request.CRM, idUser);
+            var doctor = new Doctor(request.MedicalEspeciality, request.CRM, idUser, personDetail, address);
+            //doctor.AddAddress(address);
+            //doctor.AddPersonDetail(personDetail);
 
             await _unitOfWork.Doctors.CreateAsync(doctor);
             await _unitOfWork.CompleteAsync();
