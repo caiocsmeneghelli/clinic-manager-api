@@ -1,4 +1,5 @@
 using ClinicManager.Application;
+using ClinicManager.Domain;
 using ClinicManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 var configuration = builder.Configuration;
 builder.Services
+    .AddDomain()
     .AddApplication(configuration)
     .AddInfrastructure(configuration);
 
