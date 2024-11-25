@@ -31,7 +31,7 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
         public string MedicalEspeciality { get; set; }
 
         // User
-        public string UserLogin { get; private set; }
+        public string UserLogin { get; set; }
 
         public PersonDetail ReturnPersonDetail()
         {

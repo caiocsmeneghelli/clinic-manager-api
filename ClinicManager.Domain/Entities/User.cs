@@ -9,6 +9,8 @@ namespace ClinicManager.Domain.Entities
 {
     public class User : Entity
     {
+        public User()
+        { }
         public User(string login, string password, EProfile profile)
         {
             UserLogin = login;

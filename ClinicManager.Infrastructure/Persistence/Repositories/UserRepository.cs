@@ -1,5 +1,7 @@
 ﻿using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.Repositories;
+using ClinicManager.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,17 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public Task<int> CreateAsync(User user)
+        private readonly ClinicManagerDbContext _context;
+
+        public UserRepository(ClinicManagerDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<int> CreateAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+            return user.Id;
         }
 
         public Task<User?> GetByIdAsync(int id)
@@ -20,9 +30,9 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<User?> GetByLogin(string login)
+        public async Task<User?> GetByLogin(string login)
         {
-            throw new NotImplementedException();
+            return await _context.Users.SingleOrDefaultAsync(reg => reg.UserLogin.Equals(login));
         }
     }
 }

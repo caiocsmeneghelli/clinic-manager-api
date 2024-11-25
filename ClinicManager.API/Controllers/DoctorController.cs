@@ -13,6 +13,11 @@ namespace ClinicManager.API.Controllers
     {
         private readonly IMediator _mediator;
 
+        public DoctorController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

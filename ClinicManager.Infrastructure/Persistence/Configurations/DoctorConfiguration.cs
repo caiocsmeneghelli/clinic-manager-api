@@ -17,7 +17,8 @@ namespace ClinicManager.Infrastructure.Persistence.Configurations
 
             builder.HasOne(reg => reg.User)
                 .WithMany()
-                .HasForeignKey(reg => reg.IdUser);
+                .HasForeignKey(reg => reg.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.OwnsOne(reg => reg.Address, addr =>
             {
