@@ -11,6 +11,7 @@ namespace ClinicManager.Domain.Repositories
     {
         Task<User?> GetByIdAsync(int id);
         Task<User?> GetByLogin(string login);
+        Task<User?> GetUserByEmailPassword(string email, string hashPassword);
         Task<int> CreateAsync(User user);
     }
 }

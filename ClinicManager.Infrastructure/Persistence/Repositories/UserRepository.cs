@@ -34,5 +34,13 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
         {
             return await _context.Users.SingleOrDefaultAsync(reg => reg.UserLogin.Equals(login));
         }
+
+        public async Task<User?> GetUserByEmailPassword(string email, string hashPassword)
+        {
+            return await _context.Users
+                .Where(u => u.UserLogin.Equals(email))
+                .Where(u => u.Password.Equals(hashPassword))
+                .SingleOrDefaultAsync();
+        }
     }
 }
