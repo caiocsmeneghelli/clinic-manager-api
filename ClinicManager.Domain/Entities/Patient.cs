@@ -1,6 +1,8 @@
 ﻿using ClinicManager.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,11 @@ namespace ClinicManager.Domain.Entities
             IdUser = idUser;
         }
 
+        [Required]
+        [Column(TypeName ="decimal(5,2)")]
         public decimal Height { get; private set; }
+        [Required]
+        [Column(TypeName = "decimal(5,2)")]
         public decimal Weight { get; private set; }
         public PersonDetail PersonDetail { get; private set; }
         public Address Address { get; private set; }
