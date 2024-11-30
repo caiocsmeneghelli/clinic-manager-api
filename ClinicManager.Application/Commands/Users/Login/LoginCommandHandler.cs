@@ -29,6 +29,7 @@ namespace ClinicManager.Application.Commands.Users.Login
             User? user = await _unitOfWork.Users.GetUserByEmailPassword(request.Email, hash);
             if(user == null) { return Result.BadRequest("Usuário ou senha incorreta."); }
 
+            user.Login();
             var token = _authService.GenerateJwtToken(user.UserLogin, user.Profile.ToString());
             return Result.Success(new { token, user.Profile });
         }

@@ -40,15 +40,18 @@ namespace ClinicManager.Application.Commands.Patients.CreatePatient
             var user = await _userService.CreateUserAndValidateLogin(request.UserLogin, Domain.Enums.EProfile.Patient);
             if (user is null) { return Result.BadRequest("Login de usuário ja existente."); }
 
+            await _unitOfWork.BeginTransaction();
             int idUser = await _unitOfWork.Users.CreateAsync(user);
             await _unitOfWork.CompleteAsync();
 
             PersonDetail personDetail = request.ReturnPersonDetail();
             Address address = request.ReturnAddress();
-            var patient = new Patient(request.Height, request.Weight, personDetail, address, idUser);
+            var patient = new Patient(request.Height, request.Weight, personDetail, address, user.Id);
 
             await _unitOfWork.Patients.CreateAsync(patient);
             await _unitOfWork.CompleteAsync();
+
+            await _unitOfWork.CommitAsync();
 
             return Result.Success();
         }

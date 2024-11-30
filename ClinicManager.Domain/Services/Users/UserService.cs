@@ -30,7 +30,7 @@ namespace ClinicManager.Domain.Services.Users
             string defaultPassword = _configuration["DefaultPassword"] ?? "Password123";
             string hashPassword = _authService.ComputeSha256Hash(defaultPassword);
 
-            return new User(login, defaultPassword, Enums.EProfile.Doctor);
+            return new User(login, hashPassword, Enums.EProfile.Doctor);
         }
     }
 }
