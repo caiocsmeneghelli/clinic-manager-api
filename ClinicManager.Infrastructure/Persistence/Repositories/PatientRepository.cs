@@ -27,7 +27,10 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
 
         public async Task<List<Patient>> GetAllAsync()
         {
-            return await _context.Patients.ToListAsync();
+            return await _context.Patients
+                .Include(p => p.User)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Patient?> GetByIdAsNoTrackingAsync(int idPatient)

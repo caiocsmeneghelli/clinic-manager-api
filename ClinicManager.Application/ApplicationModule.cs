@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using FluentValidation;
+using ClinicManager.Application.Mapper;
 
 namespace ClinicManager.Application
 {
@@ -11,6 +12,7 @@ namespace ClinicManager.Application
         {
             services
                 .AddMediator()
+                .AddMapper()
                 .AddValidation();
             return services;
         }
@@ -24,6 +26,12 @@ namespace ClinicManager.Application
         private static IServiceCollection AddValidation(this IServiceCollection service)
         {
             service.AddValidatorsFromAssemblyContaining<CreateDoctorCommandValidator>();
+            return service;
+        }
+
+        private static IServiceCollection AddMapper(this IServiceCollection service)
+        {
+            service.AddAutoMapper(typeof(PatientProfile));
             return service;
         }
     }
