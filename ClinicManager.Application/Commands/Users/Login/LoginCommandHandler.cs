@@ -1,4 +1,5 @@
 ﻿using ClinicManager.Application.Results;
+using ClinicManager.Application.ViewModel;
 using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.Services.Auth;
 using ClinicManager.Domain.Services.Users;
@@ -27,11 +28,17 @@ namespace ClinicManager.Application.Commands.Users.Login
         {
             string hash = _authService.ComputeSha256Hash(request.Password);
             User? user = await _unitOfWork.Users.GetUserByEmailPassword(request.Email, hash);
-            if(user == null) { return Result.BadRequest("Usuário ou senha incorreta."); }
+            if (user == null) { return Result.BadRequest("Usuário ou senha incorreta."); }
 
             user.Login();
             var token = _authService.GenerateJwtToken(user.UserLogin, user.Profile.ToString());
-            return Result.Success(new { token, user.Profile });
+            LoginViewModel viewModel = new LoginViewModel()
+            {
+                Profile = user.Profile,
+                Token = token
+            };
+
+            return Result.Success(viewModel);
         }
     }
 }
