@@ -35,7 +35,7 @@ namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
 
         public PersonDetail ReturnPersonDetail()
         {
-            return new PersonDetail(Name, LastName, Birthdate, PhoneNumber, Email, BloodType, Cpf);
+            return new PersonDetail(Name, LastName, Birthdate, PhoneNumber, Email, Cpf, BloodType);
         }
 
         public Address ReturnAddress()
