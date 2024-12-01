@@ -14,6 +14,7 @@ namespace ClinicManager.Infrastructure.Persistence.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         public ClinicManagerDbContext(DbContextOptions<ClinicManagerDbContext> options) : base(options)
         { }

@@ -8,19 +8,19 @@ namespace ClinicManager.Domain.Entities
 {
     public class Service : Entity
     {
-        public Service(string name, string description, decimal cost, int duration)
+        public Service(string title, string description, decimal cost, int duration)
         {
-            Name = name;
+            Title = title;
             Description = description;
             Cost = cost;
             Duration = duration;
         }
 
-        public string Name { get; private set; }
+        public string Title { get; private set; }
         public string Description { get; private set; }
         public decimal Cost { get; private set; }
         public int Duration { get; private set; }
-        public int IdMedicalCare { get; private set; }
-        public MedicalCare MedicalCare { get; private set; }
+        //public int IdMedicalCare { get; private set; }
+        //public MedicalCare MedicalCare { get; private set; }
     }
 }
