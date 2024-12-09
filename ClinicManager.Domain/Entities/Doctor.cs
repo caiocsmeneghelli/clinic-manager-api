@@ -30,7 +30,7 @@ namespace ClinicManager.Domain.Entities
         [StringLength(13)]
         [Required]
         public string CRM { get; private set; }
-        //public List<MedicalCare> MedicalCares { get; private set; }
+        public List<MedicalCare> MedicalCares { get; private set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
     }
