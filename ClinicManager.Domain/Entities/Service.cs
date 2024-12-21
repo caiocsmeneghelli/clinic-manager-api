@@ -20,7 +20,7 @@ namespace ClinicManager.Domain.Entities
         public string Description { get; private set; }
         public decimal Cost { get; private set; }
         public int Duration { get; private set; }
-        //public int IdMedicalCare { get; private set; }
-        //public MedicalCare MedicalCare { get; private set; }
+        public int IdMedicalCare { get; private set; }
+        public MedicalCare MedicalCare { get; private set; }
     }
 }

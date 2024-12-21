@@ -18,6 +18,16 @@ namespace ClinicManager.Infrastructure.Persistence.Configurations
             builder.HasOne(reg => reg.Doctor)
                 .WithMany(r => r.MedicalCares)
                 .HasForeignKey(reg => reg.IdDoctor);
+
+            builder.HasOne(reg => reg.Patient)
+                .WithMany(p => p.MedicalCares)
+                .HasForeignKey(m => m.IdPatient);
+
+            builder.HasOne(reg => reg.Service)
+                .WithOne(s => s.MedicalCare)
+                .HasForeignKey<MedicalCare>(m => m.IdService)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
