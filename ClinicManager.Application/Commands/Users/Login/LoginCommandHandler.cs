@@ -31,11 +31,13 @@ namespace ClinicManager.Application.Commands.Users.Login
             if (user == null) { return Result.BadRequest("Usuário ou senha incorreta."); }
 
             user.Login();
+            await _unitOfWork.CompleteAsync();
             var token = _authService.GenerateJwtToken(user.UserLogin, user.Profile.ToString());
             LoginViewModel viewModel = new LoginViewModel()
             {
                 Profile = user.Profile,
-                Token = token
+                Token = token,
+                ResetPasswordRequired = user.ResetPasswordRequired
             };
 
             return Result.Success(viewModel);

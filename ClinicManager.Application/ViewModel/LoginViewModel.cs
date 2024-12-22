@@ -11,5 +11,6 @@ namespace ClinicManager.Application.ViewModel
     {
         public string Token { get; set; }
         public EProfile Profile { get; set; }
+        public bool ResetPasswordRequired { get; set; }
     }
 }

@@ -16,16 +16,24 @@ namespace ClinicManager.Domain.Entities
             UserLogin = login;
             Password = password;
             Profile = profile;
+            ResetPasswordRequired = true;
         }
 
         public string UserLogin { get; private set; }
         public string Password { get; private set; }
         public EProfile Profile { get; private set; }
         public DateTime? LastLogin { get; private set; }
+        public bool ResetPasswordRequired { get; set; }
 
         public void Login()
         {
             LastLogin = DateTime.Now;
+        }
+
+        public void UpdatePassword(string newPassword)
+        {
+            ResetPasswordRequired = false;
+            Password = newPassword;
         }
     }
 }
