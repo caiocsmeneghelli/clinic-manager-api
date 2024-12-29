@@ -23,9 +23,14 @@ namespace ClinicManager.Infrastructure.Persistence.UnitOfWork
 
         public IPatientRepository Patients { get; }
 
-        public IDoctorRepository Doctors {get;}
+        public IDoctorRepository Doctors { get; }
 
-        public IUserRepository Users {get;}
+        public IUserRepository Users { get; }
+
+        public IMedicalCareRepository MedicalCares { get; }
+
+
+
         public readonly ClinicManagerDbContext _context;
 
         private IDbContextTransaction _transaction;

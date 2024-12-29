@@ -20,8 +20,8 @@ namespace ClinicManager.Application.Queries.MedicalCare.GetAll
 
         public async Task<Result> Handle(GetAllMedicalCareQuery request, CancellationToken cancellationToken)
         {
-            // To-do
-            return Result.Success();
+            var results = await _unitOfWork.MedicalCares.GetAll();
+            return Result.Success(results);
         }
     }
 }
