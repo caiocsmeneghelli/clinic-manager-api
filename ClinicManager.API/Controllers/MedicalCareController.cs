@@ -1,4 +1,5 @@
 ﻿using ClinicManager.Application.Queries.MedicalCare.GetAll;
+using ClinicManager.Application.Queries.MedicalCare.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,11 @@ namespace ClinicManager.API.Controllers
         [HttpGet("doctor/{id}")]
         public async Task<IActionResult> GetAllByDoctor(int id)
         {
-            // GetAllById
-            return Ok();
+            var query = new GetMedicalCareByIdQuery(id);
+            var result = await _mediatr.Send(query);
+
+            if(!result.IsSuccess) { return NotFound(result); }
+            return Ok(result);
         }
 
         [HttpGet("patient/{id}")]
