@@ -21,6 +21,6 @@ namespace ClinicManager.Domain.Entities
         public decimal Cost { get; private set; }
         public int Duration { get; private set; }
         public int IdMedicalCare { get; private set; }
-        public MedicalCare MedicalCare { get; private set; }
+        public MedicalAppointment MedicalCare { get; private set; }
     }
 }

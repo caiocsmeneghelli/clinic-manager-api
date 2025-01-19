@@ -24,10 +24,10 @@ namespace ClinicManager.Application.Queries.MedicalCare.GetById
 
         public async Task<Result> Handle(GetMedicalCareByIdQuery request, CancellationToken cancellationToken)
         {
-            var medicalCare = await _unitOfWork.MedicalCares.GetMedicalCareByIdAsync(request.IdMedicalCare);
+            var medicalCare = await _unitOfWork.MedicalAppointments.GetMedicalAppointmentByIdAsync(request.IdMedicalCare);
             if (medicalCare == null) { return Result.NotFound("Atendimento não encontraado."); }
 
-            var medicalCareViewModel = _mapper.Map<MedicalCareViewModel>(medicalCare);
+            var medicalCareViewModel = _mapper.Map<MedicalAppointmentViewModel>(medicalCare);
             return Result.Success(medicalCareViewModel);
         }
     }

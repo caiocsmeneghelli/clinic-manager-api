@@ -24,8 +24,8 @@ namespace ClinicManager.Application.Queries.MedicalCare.GetAllByPatient
 
         public async Task<Result> Handle(GetAllMedicalCareByPatientQuery request, CancellationToken cancellationToken)
         {
-            var results = await _unitOfWork.MedicalCares.GetAllByPatient(request.PatientId);
-            var vmMedicalCare = _mapper.Map<MedicalCareViewModel>(results);
+            var results = await _unitOfWork.MedicalAppointments.GetAllByPatient(request.PatientId);
+            var vmMedicalCare = _mapper.Map<MedicalAppointmentViewModel>(results);
             return Result.Success(vmMedicalCare);
         }
     }

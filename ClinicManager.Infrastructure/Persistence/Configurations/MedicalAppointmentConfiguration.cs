@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Infrastructure.Persistence.Configurations
 {
-    public class MedicalCareConfiguration : IEntityTypeConfiguration<MedicalCare>
+    public class MedicalAppointmentConfiguration : IEntityTypeConfiguration<MedicalAppointment>
     {
-        public void Configure(EntityTypeBuilder<MedicalCare> builder)
+        public void Configure(EntityTypeBuilder<MedicalAppointment> builder)
         {
             builder.HasKey(m => m.Id);
 
             builder.HasOne(reg => reg.Doctor)
-                .WithMany(r => r.MedicalCares)
+                .WithMany(r => r.MedicalAppointments)
                 .HasForeignKey(reg => reg.IdDoctor);
 
             builder.HasOne(reg => reg.Patient)
-                .WithMany(p => p.MedicalCares)
+                .WithMany(p => p.MedicalAppointments)
                 .HasForeignKey(m => m.IdPatient);
 
             builder.HasOne(reg => reg.Service)
                 .WithOne(s => s.MedicalCare)
-                .HasForeignKey<MedicalCare>(m => m.IdService)
+                .HasForeignKey<MedicalAppointment>(m => m.IdService)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
         }

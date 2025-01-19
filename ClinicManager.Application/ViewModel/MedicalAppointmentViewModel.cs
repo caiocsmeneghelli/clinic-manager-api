@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.ViewModel
 {
-    public class MedicalCareViewModel
+    public class MedicalAppointmentViewModel
     {
         public string PatientName { get; set; }
         public string DoctorName { get; set; }

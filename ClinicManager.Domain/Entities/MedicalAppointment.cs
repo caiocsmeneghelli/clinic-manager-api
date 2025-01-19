@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Domain.Entities
 {
-    public class MedicalCare : Entity
+    public class MedicalAppointment : Entity
     {
-        public MedicalCare(int idPatient, int idDoctor, int idService, 
+        public MedicalAppointment(int idPatient, int idDoctor, int idService, 
             string healthInsurance, DateTime start, DateTime end)
         {
             IdPatient = idPatient;

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Mapper
 {
-    public class MedicalCareProfile : Profile
+    public class MedicalAppointmentProfile : Profile
     {
-        public MedicalCareProfile()
+        public MedicalAppointmentProfile()
         {
-            CreateMap<MedicalCare, MedicalCareViewModel>()
+            CreateMap<MedicalAppointment, MedicalAppointmentViewModel>()
                 .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.PersonDetail.FirstName))
                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor.PersonDetail.FirstName))
                 .ForMember(dest => dest.ServiceName, opt => opt.MapFrom(src => src.Service.Title))

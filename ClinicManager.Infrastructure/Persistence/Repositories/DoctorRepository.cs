@@ -45,10 +45,11 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(reg => reg.Id == idDoctor);
         }
 
-        public async Task<Doctor?> GetByIdWithMedicalCareAsync(int idDoctor)
+        public async Task<Doctor?> GetByIdWithMedicalAppointmentAsync(int idDoctor)
         {
             // Add medical Care
             return await _context.Doctors
+                .Include(reg => reg.MedicalAppointments)
                 .SingleOrDefaultAsync(reg => reg.Id == idDoctor);
         }
     }

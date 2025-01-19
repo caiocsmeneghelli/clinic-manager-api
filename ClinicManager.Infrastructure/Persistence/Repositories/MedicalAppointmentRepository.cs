@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Infrastructure.Persistence.Repositories
 {
-    public class MedicalCareRepository : IMedicalCareRepository
+    public class MedicalAppointmentRepository : IMedicalAppointmentRepository
     {
         private readonly ClinicManagerDbContext _context;
 
-        public MedicalCareRepository(ClinicManagerDbContext context)
+        public MedicalAppointmentRepository(ClinicManagerDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> CreateAsync(MedicalCare entity)
+        public async Task<int> CreateAsync(MedicalAppointment entity)
         {
-            await _context.MedicalCares.AddAsync(entity);
+            await _context.MedicalAppointments.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity.Id;
         }
 
-        public async Task<List<MedicalCare>> GetAll()
+        public async Task<List<MedicalAppointment>> GetAll()
         {
-            return await _context.MedicalCares
+            return await _context.MedicalAppointments
                 .Include(reg => reg.Doctor)
                 .Include(reg => reg.Patient)
                 .Include(reg => reg.Service)
@@ -37,9 +37,9 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<MedicalCare>> GetAllByDoctor(int doctorId)
+        public async Task<List<MedicalAppointment>> GetAllByDoctor(int doctorId)
         {
-            return await _context.MedicalCares
+            return await _context.MedicalAppointments
                 .Where(reg => reg.IdDoctor == doctorId)
                 .Include(reg => reg.Doctor)
                 .Include(reg => reg.Patient)
@@ -48,9 +48,9 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<MedicalCare>> GetAllByPatient(int patientId)
+        public async Task<List<MedicalAppointment>> GetAllByPatient(int patientId)
         {
-            return await _context.MedicalCares
+            return await _context.MedicalAppointments
                 .Where(reg => reg.IdPatient == patientId)
                 .Include(reg => reg.Doctor)
                 .Include(reg => reg.Patient)
@@ -59,9 +59,9 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<MedicalCare?> GetMedicalCareByIdAsync(int id)
+        public async Task<MedicalAppointment?> GetMedicalAppointmentByIdAsync(int id)
         {
-            return await _context.MedicalCares
+            return await _context.MedicalAppointments
                 .SingleOrDefaultAsync(reg => reg.Id == id);
         }
     }

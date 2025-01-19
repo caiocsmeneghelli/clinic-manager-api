@@ -48,7 +48,7 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(reg => reg.Id == idPatient);
         }
 
-        public async Task<Patient?> GetByIdWithMedicalCareAsync(int idPatient)
+        public async Task<Patient?> GetByIdWithMedicalAppointmentAsync(int idPatient)
         {
             return await _context
                  .Patients
