@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Queries.MedicalCare.GetAllByDoctor
 {
-    public class GetAllMedicalCareByDoctorQuery : IRequest<Result> 
+    public class GetAllMedicalAppointmentsByDoctorQuery : IRequest<Result> 
     {
         public int DoctorId { get; private set; }
 
-        public GetAllMedicalCareByDoctorQuery(int doctorId)
+        public GetAllMedicalAppointmentsByDoctorQuery(int doctorId)
         {
             DoctorId = doctorId;
         }

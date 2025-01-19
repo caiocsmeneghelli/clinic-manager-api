@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Queries.MedicalCare.GetAll
 {
-    public class GetAllMedicalCareQuery : IRequest<Result>
+    public class GetAllMedicalAppointmentsQuery : IRequest<Result>
     {
     }
 }

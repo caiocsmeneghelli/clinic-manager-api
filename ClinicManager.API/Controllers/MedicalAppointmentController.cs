@@ -10,11 +10,11 @@ namespace ClinicManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicalCareController : ControllerBase
+    public class MedicalAppointmentController : ControllerBase
     {
         private readonly IMediator _mediatr;
 
-        public MedicalCareController(IMediator mediatr)
+        public MedicalAppointmentController(IMediator mediatr)
         {
             _mediatr = mediatr;
         }
@@ -22,7 +22,7 @@ namespace ClinicManager.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var query = new GetAllMedicalCareQuery();
+            var query = new GetAllMedicalAppointmentsQuery();
             var result = await _mediatr.Send(query);
 
             return Ok(result);
@@ -31,7 +31,7 @@ namespace ClinicManager.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var query = new GetMedicalCareByIdQuery(id);
+            var query = new GetMedicalAppointmentByIdQuery(id);
             var result = await _mediatr.Send(query);
 
             if(!result.IsSuccess) { return NotFound(result); }
@@ -41,7 +41,7 @@ namespace ClinicManager.API.Controllers
         [HttpGet("doctor/{id}")]
         public async Task<IActionResult> GetAllByDoctor(int id)
         {
-            var query = new GetAllMedicalCareByDoctorQuery(id);
+            var query = new GetAllMedicalAppointmentsByDoctorQuery(id);
             var result = await _mediatr.Send(query);
             return Ok(result);
         }
@@ -49,7 +49,7 @@ namespace ClinicManager.API.Controllers
         [HttpGet("patient/{id}")]
         public async Task<IActionResult> GetAllByPatient(int id)
         {
-            var query = new GetAllMedicalCareByPatientQuery(id);
+            var query = new GetAllMedicalAppointmentsByPatientQuery(id);
             var result = await _mediatr.Send(query);
             return Ok(result);
         }

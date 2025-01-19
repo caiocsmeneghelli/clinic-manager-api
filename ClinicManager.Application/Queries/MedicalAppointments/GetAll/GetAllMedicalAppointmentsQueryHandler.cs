@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Queries.MedicalCare.GetAll
 {
-    public class GetAllMedicalCareQueryHandler : IRequestHandler<GetAllMedicalCareQuery, Result>
+    public class GetAllMedicalAppointmentsQueryHandler : IRequestHandler<GetAllMedicalAppointmentsQuery, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetAllMedicalCareQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public GetAllMedicalAppointmentsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Result> Handle(GetAllMedicalCareQuery request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(GetAllMedicalAppointmentsQuery request, CancellationToken cancellationToken)
         {
             var results = await _unitOfWork.MedicalAppointments.GetAll();
             var resultsViewModel = _mapper.Map<List<MedicalAppointmentViewModel>>(results);
