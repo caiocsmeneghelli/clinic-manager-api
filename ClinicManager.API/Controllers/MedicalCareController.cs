@@ -26,8 +26,8 @@ namespace ClinicManager.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("doctor/{id}")]
-        public async Task<IActionResult> GetAllByDoctor(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
             var query = new GetMedicalCareByIdQuery(id);
             var result = await _mediatr.Send(query);
@@ -37,7 +37,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("patient/{id}")]
-        public async Task<IActionResult> GetAllByPatient(int id)
+        public async Task<IActionResult> GetAllByDoctor(int id)
         {
             // GetAllByPatient
             return Ok();

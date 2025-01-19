@@ -37,6 +37,28 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<MedicalCare>> GetAllByDoctor(int doctorId)
+        {
+            return await _context.MedicalCares
+                .Where(reg => reg.IdDoctor == doctorId)
+                .Include(reg => reg.Doctor)
+                .Include(reg => reg.Patient)
+                .Include(reg => reg.Service)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<List<MedicalCare>> GetAllByPatient(int patientId)
+        {
+            return await _context.MedicalCares
+                .Where(reg => reg.IdPatient == patientId)
+                .Include(reg => reg.Doctor)
+                .Include(reg => reg.Patient)
+                .Include(reg => reg.Service)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<MedicalCare?> GetMedicalCareByIdAsync(int id)
         {
             return await _context.MedicalCares
