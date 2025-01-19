@@ -1,4 +1,6 @@
 ﻿using ClinicManager.Application.Queries.MedicalCare.GetAll;
+using ClinicManager.Application.Queries.MedicalCare.GetAllByDoctor;
+using ClinicManager.Application.Queries.MedicalCare.GetAllByPatient;
 using ClinicManager.Application.Queries.MedicalCare.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -36,11 +38,20 @@ namespace ClinicManager.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("patient/{id}")]
+        [HttpGet("doctor/{id}")]
         public async Task<IActionResult> GetAllByDoctor(int id)
         {
-            // GetAllByPatient
-            return Ok();
+            var query = new GetAllMedicalCareByDoctorQuery(id);
+            var result = await _mediatr.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("patient/{id}")]
+        public async Task<IActionResult> GetAllByPatient(int id)
+        {
+            var query = new GetAllMedicalCareByPatientQuery(id);
+            var result = await _mediatr.Send(query);
+            return Ok(result);
         }
     }
 }
