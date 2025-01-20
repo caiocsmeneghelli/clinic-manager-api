@@ -28,6 +28,7 @@ namespace ClinicManager.Infrastructure.Persistence.UnitOfWork
         public IUserRepository Users { get; }
 
         public IMedicalAppointmentRepository MedicalAppointments { get; }
+        public IServiceRepository Services { get; }
 
 
 

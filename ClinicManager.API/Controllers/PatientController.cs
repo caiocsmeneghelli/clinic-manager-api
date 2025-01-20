@@ -1,8 +1,7 @@
-﻿using ClinicManager.Application.Commands.Patients.CreatePatient;
+﻿using ClinicManager.Application.Commands.Patients.Create;
 using ClinicManager.Application.Queries.Patients.GetAll;
-using ClinicManager.Application.Queries.Patients.GetPatientById;
+using ClinicManager.Application.Queries.Patients.GetById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicManager.API.Controllers

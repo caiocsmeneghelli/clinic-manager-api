@@ -1,8 +1,8 @@
-﻿using ClinicManager.Application.Commands.Doctors.CreateDoctor;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using FluentValidation;
 using ClinicManager.Application.Mapper;
+using ClinicManager.Application.Commands.Doctors.Create;
 
 namespace ClinicManager.Application
 {

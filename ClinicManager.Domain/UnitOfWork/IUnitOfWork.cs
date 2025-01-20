@@ -14,6 +14,7 @@ namespace ClinicManager.Domain.UnitOfWork
         IDoctorRepository Doctors { get; }
         IUserRepository Users { get; }
         IMedicalAppointmentRepository MedicalAppointments { get; }
+        IServiceRepository Services { get; }
 
 
         Task<int> CompleteAsync();

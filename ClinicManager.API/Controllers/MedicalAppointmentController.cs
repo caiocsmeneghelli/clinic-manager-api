@@ -1,10 +1,9 @@
 ﻿using ClinicManager.Application.Commands.MedicalAppointments.Create;
-using ClinicManager.Application.Queries.MedicalCare.GetAll;
-using ClinicManager.Application.Queries.MedicalCare.GetAllByDoctor;
-using ClinicManager.Application.Queries.MedicalCare.GetAllByPatient;
-using ClinicManager.Application.Queries.MedicalCare.GetById;
+using ClinicManager.Application.Queries.MedicalAppointments.GetAll;
+using ClinicManager.Application.Queries.MedicalAppointments.GetAllByDoctor;
+using ClinicManager.Application.Queries.MedicalAppointments.GetAllByPatient;
+using ClinicManager.Application.Queries.MedicalAppointments.GetById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicManager.API.Controllers
