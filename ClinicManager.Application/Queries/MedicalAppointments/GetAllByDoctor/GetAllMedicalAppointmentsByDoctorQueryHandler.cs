@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Queries.MedicalCare.GetAllByDoctor
+namespace ClinicManager.Application.Queries.MedicalAppointments.GetAllByDoctor
 {
     public class GetAllMedicalAppointmentsByDoctorQueryHandler : IRequestHandler<GetAllMedicalAppointmentsByDoctorQuery, Result>
     {

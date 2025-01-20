@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Commands.Patients.CreatePatient
+namespace ClinicManager.Application.Commands.Doctors.Create
 {
-    public class CreatePatientCommandValidator : AbstractValidator<CreatePatientCommand>
+    public class CreateDoctorCommandValidator : AbstractValidator<CreateDoctorCommand>
     {
-        public CreatePatientCommandValidator()
+        public CreateDoctorCommandValidator()
         {
             // Person Info
             RuleFor(c => c.Name).NotEmpty().WithMessage("Nome não pode ser vazio.")
@@ -43,6 +43,12 @@ namespace ClinicManager.Application.Commands.Patients.CreatePatient
 
             RuleFor(c => c.Country).NotEmpty().WithMessage("O campo Pais não pode ser vazio.")
                 .MaximumLength(128).WithMessage("O campo Pais deve ter no máximo 128 caracteres.");
+
+            // Doctor
+            RuleFor(c => c.CRM).NotEmpty().WithMessage("O campo Rua não pode ser vazio.");
+
+            RuleFor(c => c.MedicalEspeciality).NotEmpty().WithMessage("O campo Especialidade Médica não pode ser vazio.")
+                .MaximumLength(128).WithMessage("O campo Especialidade Médica deve ter no máximo 128 caracteres.");
         }
     }
 }

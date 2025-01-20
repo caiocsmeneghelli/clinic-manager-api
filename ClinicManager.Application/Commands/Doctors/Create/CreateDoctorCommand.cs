@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Commands.Doctors.CreateDoctor
+namespace ClinicManager.Application.Commands.Doctors.Create
 {
     public class CreateDoctorCommand : IRequest<Result>
     {

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Commands.Patients.CreatePatient
+namespace ClinicManager.Application.Commands.Patients.Create
 {
     public class CreatePatientCommandHandler : IRequestHandler<CreatePatientCommand, Result>
     {

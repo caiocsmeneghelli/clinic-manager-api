@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Queries.MedicalCare.GetAll
+namespace ClinicManager.Application.Queries.MedicalAppointments.GetAll
 {
     public class GetAllMedicalAppointmentsQuery : IRequest<Result>
     {

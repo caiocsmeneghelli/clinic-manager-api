@@ -1,4 +1,5 @@
-﻿using ClinicManager.Application.Queries.MedicalCare.GetAll;
+﻿using ClinicManager.Application.Commands.MedicalAppointments.Create;
+using ClinicManager.Application.Queries.MedicalCare.GetAll;
 using ClinicManager.Application.Queries.MedicalCare.GetAllByDoctor;
 using ClinicManager.Application.Queries.MedicalCare.GetAllByPatient;
 using ClinicManager.Application.Queries.MedicalCare.GetById;
@@ -52,6 +53,15 @@ namespace ClinicManager.API.Controllers
             var query = new GetAllMedicalAppointmentsByPatientQuery(id);
             var result = await _mediatr.Send(query);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateMedicalAppointmentCommand command)
+        {
+            var result = await _mediatr.Send(command);
+            if(!result.IsSuccess) { return BadRequest(result); }
+
+            return CreatedAtAction(nameof(GetById), (int)result.Data, result.Data);
         }
     }
 }

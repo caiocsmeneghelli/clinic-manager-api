@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClinicManager.Application.Queries.Patients.GetPatientById
+namespace ClinicManager.Application.Queries.Patients.GetById
 {
     public class GetPatientByIdQuery : IRequest<Result>
     {
