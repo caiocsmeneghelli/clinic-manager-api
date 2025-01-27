@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Commands.MedicalAppointments.Cancel
 {
-    public class CancelMedicalAppointmentCommandQuery : IRequestHandler<CancelMedicalAppointmentCommand, Result>
+    public class CancelMedicalAppointmentCommandHandler : IRequestHandler<CancelMedicalAppointmentCommand, Result>
     {
-        private readonly IMediator _mediator;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CancelMedicalAppointmentCommandQuery(IMediator mediator, IUnitOfWork unitOfWork)
+        public CancelMedicalAppointmentCommandHandler(IUnitOfWork unitOfWork)
         {
-            _mediator = mediator;
             _unitOfWork = unitOfWork;
         }
 
