@@ -1,4 +1,5 @@
-﻿using ClinicManager.Application.Commands.MedicalAppointments.Create;
+﻿using ClinicManager.Application.Commands.MedicalAppointments.Cancel;
+using ClinicManager.Application.Commands.MedicalAppointments.Create;
 using ClinicManager.Application.Queries.MedicalAppointments.GetAll;
 using ClinicManager.Application.Queries.MedicalAppointments.GetAllByDoctor;
 using ClinicManager.Application.Queries.MedicalAppointments.GetAllByPatient;
@@ -61,6 +62,19 @@ namespace ClinicManager.API.Controllers
             if(!result.IsSuccess) { return BadRequest(result); }
 
             return CreatedAtAction(nameof(GetById), (int)result.Data, result.Data);
+        }
+
+        [HttpPut("cancel/{id}")]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var command = new CancelMedicalAppointmentCommand(id);
+            var result = await _mediatr.Send(command);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }

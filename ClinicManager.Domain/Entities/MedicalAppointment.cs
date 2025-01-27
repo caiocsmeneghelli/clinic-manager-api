@@ -28,5 +28,12 @@ namespace ClinicManager.Domain.Entities
         public string HealthInsurance { get; private set; }
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
+
+
+        public void Reschedule(DateTime newStart, DateTime? newEnd)
+        {
+            Start = newStart;
+            End = newEnd.HasValue ? newEnd.Value : Start.AddMinutes(Service.Duration);
+        }
     }
 }

@@ -18,6 +18,6 @@ namespace ClinicManager.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public bool Active { get; set; }
 
-        public void Delete() { Active = false; }
+        public void Cancel() { Active = false; }
     }
 }
