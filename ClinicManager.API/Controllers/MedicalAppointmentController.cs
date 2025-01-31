@@ -62,7 +62,7 @@ namespace ClinicManager.API.Controllers
             var result = await _mediatr.Send(command);
             if(!result.IsSuccess) { return BadRequest(result); }
 
-            return CreatedAtAction(nameof(GetById), (int)result.Data, result.Data);
+            return NoContent();
         }
 
         [HttpPut("cancel/{id}")]

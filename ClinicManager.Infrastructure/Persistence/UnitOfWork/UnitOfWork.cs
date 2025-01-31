@@ -13,11 +13,13 @@ namespace ClinicManager.Infrastructure.Persistence.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         public UnitOfWork(IPatientRepository patients, IDoctorRepository doctors,
-            IUserRepository users, ClinicManagerDbContext context)
+            IUserRepository users, ClinicManagerDbContext context, IMedicalAppointmentRepository medicalAppointments, IServiceRepository services)
         {
             Patients = patients;
             Doctors = doctors;
             Users = users;
+            MedicalAppointments = medicalAppointments;
+            Services = services;
             _context = context;
         }
 
