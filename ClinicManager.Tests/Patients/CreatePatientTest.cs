@@ -32,11 +32,6 @@ namespace ClinicManager.Tests.Patients
         public async void HandlerShouldReturnSuccess()
         {
             // Arrange
-            _unitOfWork
-                .Patients
-                .GetByIdAsNoTrackingAsync(Arg.Any<int>())
-                .Returns(Task.FromResult<Patient?>(null));
-
             _userService.CreateUserAndValidateLogin(Arg.Any<string>(), Domain.Enums.EProfile.Patient)
                 .Returns(new User("login", "password", Domain.Enums.EProfile.Patient));
 
@@ -65,6 +60,48 @@ namespace ClinicManager.Tests.Patients
             var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public async void HandlerShouldReturnError()
+        {
+            // Arrange
+            var validationErrors = new List<ValidationFailure>()
+            {
+                new ValidationFailure("Cpf", "Cpf inválido"),
+                new ValidationFailure("Email", "E-mail inválido")
+            };
+
+            _userService.CreateUserAndValidateLogin(Arg.Any<string>(), Domain.Enums.EProfile.Patient)
+                .Returns(new User("login", "password", Domain.Enums.EProfile.Patient));
+
+            _validator.Validate(Arg.Any<CreatePatientCommand>())
+                .Returns(new ValidationResult(validationErrors));
+
+            // Act
+            var command = new CreatePatientCommand();
+            command.Name = "FirstName";
+            command.LastName = "LastName";
+            command.Birthdate = new DateTime(1995, 12, 15);
+            command.PhoneNumber = "PhoneNumber";
+            command.Email = "email";
+            command.BloodType = "A+";
+            command.Cpf = "cpf";
+
+            command.Street = "Street";
+            command.City = "City";
+            command.Uf = "UF";
+            command.Country = "Country";
+
+            command.Height = 1.75m;
+            command.Weight = 60.4m;
+
+            var handler = new CreatePatientCommandHandler(_unitOfWork, _validator, _userService);
+            var result = await handler.Handle(command, CancellationToken.None);
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal(2, result.Messages.Count);
+            Assert.Equal(400, result.StatusCode);
         }
     }
 }
