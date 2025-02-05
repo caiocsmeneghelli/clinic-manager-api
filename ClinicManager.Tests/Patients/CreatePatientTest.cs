@@ -60,6 +60,7 @@ namespace ClinicManager.Tests.Patients
             var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.IsSuccess);
+            Assert.NotNull(result.Data);
         }
 
         [Fact]
@@ -102,6 +103,7 @@ namespace ClinicManager.Tests.Patients
             Assert.False(result.IsSuccess);
             Assert.Equal(2, result.Messages.Count);
             Assert.Equal(400, result.StatusCode);
+            Assert.Null(result.Data);
         }
     }
 }

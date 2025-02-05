@@ -53,7 +53,7 @@ namespace ClinicManager.Application.Commands.Patients.Create
 
             await _unitOfWork.CommitAsync();
 
-            return Result.Success();
+            return Result.Success(patient);
         }
     }
 }
