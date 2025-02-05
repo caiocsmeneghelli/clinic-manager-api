@@ -1,6 +1,7 @@
 ﻿using ClinicManager.Application.Results;
 using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
+using FluentValidation;
 using MediatR;
 using MediatR.Registration;
 using Microsoft.VisualBasic;
@@ -15,20 +16,29 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Create
     public class CreateMedicalAppointmentCommandHandler : IRequestHandler<CreateMedicalAppointmentCommand, Result>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IValidator<CreateMedicalAppointmentCommand> _validator;
 
-        public CreateMedicalAppointmentCommandHandler(IUnitOfWork unitOfWork)
+        public CreateMedicalAppointmentCommandHandler(IUnitOfWork unitOfWork,
+            IValidator<CreateMedicalAppointmentCommand> validator)
         {
             _unitOfWork = unitOfWork;
+            _validator = validator;
         }
 
         public async Task<Result> Handle(CreateMedicalAppointmentCommand request, CancellationToken cancellationToken)
         {
-            int medicalAppointmentId;
+            List<string> errors = new List<string>();
+            var validationResult = _validator.Validate(request);
+            if (validationResult.IsValid == false)
+            {
+                errors = validationResult.Errors
+                       .Select(reg => reg.ErrorMessage)
+                       .ToList();
+                return Result.BadRequest(errors);
+            }
 
-            // Validate Command
             if (request.End is null) { request.FillEnd(); }
 
-            List<string> errors = new List<string>();
             Patient? patient = await _unitOfWork.Patients.GetByIdAsync(request.IdPatient);
             Doctor? doctor = await _unitOfWork.Doctors.GetByIdAsync(request.IdDoctor);
 
@@ -48,19 +58,17 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Create
                 await _unitOfWork.CompleteAsync();
 
                 MedicalAppointment medicalAppointment = new MedicalAppointment(patient.Id, doctor.Id,
-                    service.Id, request.HealthInsurance, request.Start, request.End.Value);
+                    service.Id, request.HealthPlan, request.Start, request.End.Value);
                 await _unitOfWork.MedicalAppointments.CreateAsync(medicalAppointment);
                 await _unitOfWork.CompleteAsync();
-                
+
                 await _unitOfWork.CommitAsync();
-                medicalAppointmentId = medicalAppointment.Id;
+                return Result.Success(medicalAppointment);
             }
             catch (Exception ex)
             {
                 return Result.BadRequest("Falha ao salvar atendimento médico.");
             }
-
-            return Result.Success(medicalAppointmentId);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Create
     {
         public int IdPatient { get; set; }
         public int IdDoctor { get; set; }
-        public string HealthInsurance { get; set; }
+        public string HealthPlan { get; set; }
         public DateTime Start { get; set; }
         public DateTime? End { get; set; }
 
