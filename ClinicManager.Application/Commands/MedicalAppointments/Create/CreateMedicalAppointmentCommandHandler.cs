@@ -3,13 +3,6 @@ using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
 using FluentValidation;
 using MediatR;
-using MediatR.Registration;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Commands.MedicalAppointments.Create
 {
