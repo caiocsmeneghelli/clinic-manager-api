@@ -49,6 +49,8 @@ namespace ClinicManager.Tests.MedicalAppointments
             _validatorMock.Setup(v => v.Validate(command)).Returns(new ValidationResult());
             _unitOfWorkMock.Setup(u => u.Patients.GetByIdAsync(1)).ReturnsAsync((Patient)null);
             _unitOfWorkMock.Setup(u => u.Doctors.GetByIdAsync(2)).ReturnsAsync((Doctor)null);
+            _unitOfWorkMock.Setup(u => u.MedicalAppointments.GetMedicalAppointmentByDoctorAndDate(command.IdDoctor, command.Start))
+                .ReturnsAsync((MedicalAppointment)null);
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
@@ -81,16 +83,33 @@ namespace ClinicManager.Tests.MedicalAppointments
         [Fact]
         public async Task Handle_ShouldReturnBadRequest_WhenExceptionOccurs()
         {
-            var command = new CreateMedicalAppointmentCommand { IdDoctor = 1, IdPatient = 1 };
+            var command = new CreateMedicalAppointmentCommand { IdDoctor = 1, IdPatient = 1, Start = new DateTime() };
             _validatorMock.Setup(v => v.Validate(command)).Returns(new ValidationResult());
             _unitOfWorkMock.Setup(u => u.Patients.GetByIdAsync(command.IdPatient)).ReturnsAsync(new Patient { Id = 1 });
             _unitOfWorkMock.Setup(u => u.Doctors.GetByIdAsync(command.IdDoctor)).ReturnsAsync(new Doctor { Id = 1 });
+            _unitOfWorkMock.Setup(u => u.MedicalAppointments.GetMedicalAppointmentByDoctorAndDate(command.IdDoctor, command.Start))
+                .ReturnsAsync((MedicalAppointment)null);
             _unitOfWorkMock.Setup(u => u.Services.CreateAsync(It.IsAny<Service>())).ThrowsAsync(new Exception("Erro"));
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
             Assert.False(result.IsSuccess);
             Assert.Contains("Falha ao salvar atendimento médico.", result.Messages);
+        }
+
+        [Fact]
+        public async Task Handle_ShouldReturnBadRequest_WhenMedicalAppointmentExists()
+        {
+            var command = new CreateMedicalAppointmentCommand { IdDoctor = 1, IdPatient = 2 };
+            _validatorMock.Setup(v => v.Validate(command)).Returns(new ValidationResult());
+            _unitOfWorkMock.Setup(u => u.Patients.GetByIdAsync(command.IdPatient)).ReturnsAsync(new Patient { Id = 1 });
+            _unitOfWorkMock.Setup(u => u.Doctors.GetByIdAsync(command.IdDoctor)).ReturnsAsync(new Doctor { Id = 1 });
+            _unitOfWorkMock.Setup(u => u.MedicalAppointments.GetMedicalAppointmentByDoctorAndDate(command.IdDoctor, command.Start))
+                .ReturnsAsync(new MedicalAppointment { Id = 1 });
+
+            var result = await _handler.Handle(command, CancellationToken.None);
+
+            Assert.False(result.IsSuccess);
         }
     }
 }

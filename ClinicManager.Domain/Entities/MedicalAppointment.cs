@@ -8,7 +8,9 @@ namespace ClinicManager.Domain.Entities
 {
     public class MedicalAppointment : Entity
     {
-        public MedicalAppointment(int idPatient, int idDoctor, int idService, 
+        public MedicalAppointment()
+        { }
+        public MedicalAppointment(int idPatient, int idDoctor, int idService,
             string healthInsurance, DateTime start, DateTime end)
         {
             IdPatient = idPatient;

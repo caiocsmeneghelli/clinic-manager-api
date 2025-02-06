@@ -9,6 +9,7 @@ namespace ClinicManager.Domain.Repositories
 {
     public interface IMedicalAppointmentRepository
     {
+        Task<MedicalAppointment?> GetMedicalAppointmentByDoctorAndDate(int doctorId, DateTime date);
         Task<List<MedicalAppointment>> GetAll();
         Task<List<MedicalAppointment>> GetAllByDoctor(int doctorId);
         Task<List<MedicalAppointment>> GetAllByPatient(int patientId);

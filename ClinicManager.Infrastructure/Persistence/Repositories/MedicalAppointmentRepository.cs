@@ -64,5 +64,13 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
             return await _context.MedicalAppointments
                 .SingleOrDefaultAsync(reg => reg.Id == id);
         }
+
+        public async Task<MedicalAppointment?> GetMedicalAppointmentByDoctorAndDate(int doctorId, DateTime date)
+        {
+            return await _context.MedicalAppointments
+                .Where(reg => reg.IdDoctor == doctorId)
+                .SingleOrDefaultAsync(reg => reg.Start == date);
+        }
+
     }
 }

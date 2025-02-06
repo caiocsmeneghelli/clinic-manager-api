@@ -38,6 +38,10 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Create
             if (patient is null) { errors.Add("Paciente não encontrado."); }
             if (doctor is null) { errors.Add("Médico não encontrado."); }
 
+            var appointment = await _unitOfWork.MedicalAppointments
+                .GetMedicalAppointmentByDoctorAndDate(request.IdDoctor, request.Start);
+            if(appointment != null) { errors.Add("Já existe um atendimento para este médico neste horário."); }
+
             if (errors.Count > 0) { return Result.BadRequest(errors); }
 
             Service service = new Service(request.Service, request.Description,
