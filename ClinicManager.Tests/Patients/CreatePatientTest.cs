@@ -87,7 +87,7 @@ namespace ClinicManager.Tests.Patients
             var result = await handler.Handle(command, CancellationToken.None);
 
             Assert.False(result.IsSuccess);
-            Assert.Equal(2, result.Messages.Count);
+            Assert.Equal(2, result.Messages.ToList().Count);
             Assert.Equal(400, result.StatusCode);
             Assert.Null(result.Data);
         }
