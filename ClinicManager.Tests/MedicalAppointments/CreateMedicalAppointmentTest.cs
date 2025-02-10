@@ -1,21 +1,13 @@
-using Xunit;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using ClinicManager.Application.Commands.MedicalAppointments.Create;
-using ClinicManager.Application.Results;
 using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
-using NSubstitute;
 
 
 namespace ClinicManager.Tests.MedicalAppointments
 {
-
     public class CreateMedicalAppointmentCommandHandlerTests
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
