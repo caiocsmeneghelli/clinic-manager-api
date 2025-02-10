@@ -62,6 +62,7 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
         public async Task<MedicalAppointment?> GetMedicalAppointmentByIdAsync(int id)
         {
             return await _context.MedicalAppointments
+                .Include(reg => reg.Service)
                 .SingleOrDefaultAsync(reg => reg.Id == id);
         }
 

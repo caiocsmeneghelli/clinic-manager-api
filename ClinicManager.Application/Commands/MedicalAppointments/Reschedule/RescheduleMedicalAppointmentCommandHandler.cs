@@ -37,7 +37,7 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Reschedule
 
             var medicalAppointmentExists = await _unitOfWork.MedicalAppointments
                 .GetMedicalAppointmentByDoctorAndDate(medicalAppointment.IdDoctor, request.Start);
-            if (medicalAppointmentExists != null) { Result.BadRequest("Médico possui consulta nesse horário."); }
+            if (medicalAppointmentExists != null) { return Result.BadRequest("Médico possui consulta nesse horário."); }
 
             medicalAppointment.Reschedule(request.Start, request.End);
             await _unitOfWork.CompleteAsync();
