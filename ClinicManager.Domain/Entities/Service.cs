@@ -8,6 +8,8 @@ namespace ClinicManager.Domain.Entities
 {
     public class Service : Entity
     {
+        public Service()
+        { }
         public Service(string title, string description, decimal cost, int duration)
         {
             Title = title;

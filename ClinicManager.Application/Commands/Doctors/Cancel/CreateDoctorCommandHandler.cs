@@ -19,10 +19,9 @@ namespace ClinicManager.Application.Commands.Doctors.Cancel
             if(doctor == null) { return Result.NotFound("Médico não encontrado."); }
 
             var medicalAppointments = await _unitOfWork.MedicalAppointments
-                .GetAllByDoctor(doctor.Id);
+                .GetAllByDoctor(request.IdDoctor);
 
-            var services = await _unitOfWork.Services.GetAllByIdDoctor(doctor.Id);
-
+            var services = await _unitOfWork.Services.GetAllByIdDoctor(request.IdDoctor);
 
             await _unitOfWork.BeginTransaction();
 
