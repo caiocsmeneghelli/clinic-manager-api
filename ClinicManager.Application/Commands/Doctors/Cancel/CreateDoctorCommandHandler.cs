@@ -12,15 +12,32 @@ namespace ClinicManager.Application.Commands.Doctors.Cancel
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<Result> Handle(CancelDoctorCommand request, CancellationToken cancellationToken)
         {
             var doctor = await _unitOfWork.Doctors.GetByIdAsync(request.IdDoctor);
             if(doctor == null) { return Result.NotFound("Médico não encontrado."); }
 
+            var medicalAppointments = await _unitOfWork.MedicalAppointments
+                .GetAllByDoctor(doctor.Id);
+
+            var services = await _unitOfWork.Services.GetAllByIdDoctor(doctor.Id);
+
+
+            await _unitOfWork.BeginTransaction();
+
             doctor.Cancel();
             await _unitOfWork.CompleteAsync();
 
-            return Result.Success();
+            foreach(var medicalAppointment in medicalAppointments) { medicalAppointment.Cancel(); }
+            await _unitOfWork.CompleteAsync();
+
+            foreach(var service in services) { service.Cancel(); }
+            await _unitOfWork.CompleteAsync();
+
+            await _unitOfWork.CommitAsync();
+
+            return Result.Success("Registro do Médico cancelado.");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<MedicalAppointment>> GetAllByDoctor(int doctorId)
+        public async Task<List<MedicalAppointment>> GetAllByDoctorAsNoTracking(int doctorId)
         {
             return await _context.MedicalAppointments
                 .Where(reg => reg.IdDoctor == doctorId)
@@ -45,6 +45,13 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
                 .Include(reg => reg.Patient)
                 .Include(reg => reg.Service)
                 .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<List<MedicalAppointment>> GetAllByDoctor(int doctorId)
+        {
+            return await _context.MedicalAppointments
+                .Where(reg => reg.IdDoctor == doctorId)
                 .ToListAsync();
         }
 

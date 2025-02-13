@@ -32,6 +32,13 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
             return await _context.Services.ToListAsync();
         }
 
+        public async Task<List<Service>> GetAllByIdDoctor(int id)
+        {
+            return await _context.Services
+                .Where(reg => reg.MedicalCare.IdDoctor == id)
+                .ToListAsync();
+        }
+
         public async Task<Service?> GetByIdAsync(int id)
         {
             return await _context.Services
