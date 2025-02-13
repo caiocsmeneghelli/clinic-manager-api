@@ -5,6 +5,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,12 +27,17 @@ namespace ClinicManager.Application.Commands.MedicalAppointments.Cancel
 
             if (medicalAppointment == null) { return Result.NotFound("Atendimento não encontrado."); }
 
+            var service = await _unitOfWork.Services
+                .GetByIdAsync(medicalAppointment.Id);
+            if (service == null) { return Result.Failure((int)HttpStatusCode.InternalServerError,
+                "Não existe Serviço vinculado ao Atendimento."); }
+
             await _unitOfWork.BeginTransaction();
 
             medicalAppointment.Cancel();
             await _unitOfWork.CompleteAsync();
 
-            medicalAppointment.Service.Cancel();
+            service.Cancel();
             await _unitOfWork.CompleteAsync();
 
             await _unitOfWork.CommitAsync();

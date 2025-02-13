@@ -39,17 +39,23 @@ namespace ClinicManager.Tests.MedicalAppointments
         [Fact]
         public async Task Handler_ShouldReturnSuccess_WhenCancelAppointment(){
             // Arrange
+            var service = new Service("Title", "description", 100, 60);
+            var medicalAppointment = new MedicalAppointment(1, 1, service.Id, "string", new DateTime(), new DateTime());
+
             var command = new CancelMedicalAppointmentCommand(1);
             _unitOfWork.Setup(u => u.MedicalAppointments
                 .GetMedicalAppointmentByIdAsync(command.IdAppointment))
-                .ReturnsAsync(new MedicalAppointment());
+                .ReturnsAsync(medicalAppointment);
+            _unitOfWork.Setup(s => s.Services
+                .GetByIdAsync(service.Id)).ReturnsAsync(service);
             
             //Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.True(result.IsSuccess);
-
+            Assert.False(service.Active);
+            Assert.False(medicalAppointment.Active);
         }
     }
 }
