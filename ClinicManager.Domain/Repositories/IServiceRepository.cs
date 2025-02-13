@@ -11,7 +11,8 @@ namespace ClinicManager.Domain.Repositories
     {
         Task<int> CreateAsync(Service service);
         Task<Service?> GetByIdAsync(int id);
-        Task<List<Service>> GetAllByIdDoctor(int id);
+        Task<List<Service>> GetAllByDoctor(int id);
+        Task<List<Service>> GetAllByPatient(int id);
         Task<List<Service>> GetAllAsync();
     }
 }

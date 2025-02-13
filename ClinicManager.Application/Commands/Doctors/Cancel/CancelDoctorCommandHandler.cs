@@ -21,7 +21,7 @@ namespace ClinicManager.Application.Commands.Doctors.Cancel
             var medicalAppointments = await _unitOfWork.MedicalAppointments
                 .GetAllByDoctor(request.IdDoctor);
 
-            var services = await _unitOfWork.Services.GetAllByIdDoctor(request.IdDoctor);
+            var services = await _unitOfWork.Services.GetAllByDoctor(request.IdDoctor);
 
             await _unitOfWork.BeginTransaction();
 

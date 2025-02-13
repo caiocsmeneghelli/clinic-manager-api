@@ -31,7 +31,7 @@ namespace ClinicManager.Tests.Doctors
 
             _unitOfWorkMock.Setup(u => u.Doctors.GetByIdAsync(command.IdDoctor)).ReturnsAsync(new Doctor());
             _unitOfWorkMock.Setup(u => u.MedicalAppointments.GetAllByDoctor(command.IdDoctor)).ReturnsAsync(listMedicalAppointment);
-            _unitOfWorkMock.Setup(u => u.Services.GetAllByIdDoctor(command.IdDoctor)).ReturnsAsync(listService);
+            _unitOfWorkMock.Setup(u => u.Services.GetAllByDoctor(command.IdDoctor)).ReturnsAsync(listService);
 
             var handler = new CancelDoctorCommandHandler(_unitOfWorkMock.Object);
 
@@ -43,7 +43,7 @@ namespace ClinicManager.Tests.Doctors
             Assert.All(listService, item => Assert.False(item.Active));
             Assert.All(listMedicalAppointment, item => Assert.False(item.Active));
 
-            // FluentAssertions;
+            // FluentAssertions
             listService.Should().OnlyContain(item => item.Active == false);
             listMedicalAppointment.Should().OnlyContain(item => item.Active == false);
         }
