@@ -1,6 +1,7 @@
 ﻿using ClinicManager.Application.Commands.Doctors.Cancel;
 using ClinicManager.Application.Commands.Doctors.Create;
 using ClinicManager.Application.Commands.Doctors.Update;
+using ClinicManager.Application.Commands.Doctors.UpdateAddress;
 using ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Doctors.GetAll;
 using ClinicManager.Application.Queries.Doctors.GetById;
@@ -85,6 +86,21 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("personalDetail/{id}")]
         public async Task<IActionResult> UpdatePersonalDetail([FromRoute]int id, UpdateDoctorPersonalDetailCommand command)
+        {
+            command.IdDoctor = id;
+            var result = await _mediator.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                if (result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPut("address/{id}")]
+        public async Task<IActionResult> UpdateAddress([FromBody]int id, UpdateDoctorAddressCommand command)
         {
             command.IdDoctor = id;
             var result = await _mediator.Send(command);
