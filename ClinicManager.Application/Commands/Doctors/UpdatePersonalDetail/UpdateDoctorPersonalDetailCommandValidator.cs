@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail
 {
-    public class UpdatePersonalDetailCommandValidator : AbstractValidator<UpdatePersonalDetailDoctorCommand>
+    public class UpdateDoctorPersonalDetailCommandValidator : AbstractValidator<UpdateDoctorPersonalDetailCommand>
     {
-        public UpdatePersonalDetailCommandValidator()
+        public UpdateDoctorPersonalDetailCommandValidator()
         {
             RuleFor(c => c.Name).NotEmpty().WithMessage("Nome não pode ser vazio.")
                 .MaximumLength(128).WithMessage("Nome não pode ter mais de 128 caracteres.");

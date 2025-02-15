@@ -33,16 +33,21 @@ namespace ClinicManager.Domain.Entities
         public List<MedicalAppointment> MedicalAppointments { get; private set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
+        public void UpdateDoctor(string crm, string medicalSpeciality)
+        {
+            CRM = crm;
+            MedicalSpecialty = medicalSpeciality;
+        }
 
         public void UpdatePersonalDetail(PersonDetail personal)
         {
             PersonDetail = personal;
         }
 
-        public void UpdateDoctor(string crm, string medicalSpeciality)
+        public void UpdateAddress(Address address)
         {
-            CRM = crm;
-            MedicalSpecialty = medicalSpeciality;
+            Address = address;
         }
+
     }
 }

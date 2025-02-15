@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail
 {
-    public class UpdatePersonalDetailDoctorCommand : IRequest<Result>
+    public class UpdateDoctorPersonalDetailCommand : IRequest<Result>
     {
         public int IdDoctor { get; set; }
         public string Name { get; set; }
