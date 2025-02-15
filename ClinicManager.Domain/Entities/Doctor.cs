@@ -38,5 +38,11 @@ namespace ClinicManager.Domain.Entities
         {
             PersonDetail = personal;
         }
+
+        public void UpdateDoctor(string crm, string medicalSpeciality)
+        {
+            CRM = crm;
+            MedicalSpecialty = medicalSpeciality;
+        }
     }
 }
