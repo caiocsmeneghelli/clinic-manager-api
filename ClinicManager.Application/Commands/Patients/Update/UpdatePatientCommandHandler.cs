@@ -32,7 +32,7 @@ namespace ClinicManager.Application.Commands.Patients.Update
             patient.Update(request.Height, request.Weight);
             await _unitOfWork.CompleteAsync();
 
-            return Result.Success("Informações do Paciente atualizadas.");
+            return Result.Success(patient);
         }
     }
 }
