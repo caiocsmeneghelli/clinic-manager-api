@@ -1,8 +1,12 @@
 ﻿using ClinicManager.Application.Commands.Patients.Create;
+using ClinicManager.Application.Commands.Patients.Update;
+using ClinicManager.Application.Commands.Patients.UpdateAddress;
+using ClinicManager.Application.Commands.Patients.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Patients.GetAll;
 using ClinicManager.Application.Queries.Patients.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ClinicManager.API.Controllers
 {
@@ -49,6 +53,54 @@ namespace ClinicManager.API.Controllers
             }
 
             return Created();
+        }
+
+        [HttpPut("{idPatient}")]
+        public async Task<IActionResult> Update([FromRoute]int idPatient, UpdatePatientCommand command)
+        {
+            command.IdPatient = idPatient;
+            var result = await _mediatr.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                if(result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPut("personalDetail/{idPatient}")]
+        public async Task<IActionResult> UpdatePersonal([FromRoute]int idPatient, UpdatePatientPersonalDetailCommand command)
+        {
+            command.IdPatient = idPatient;
+            var result = await _mediatr.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                if (result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPut("address/{idPatient}")]
+        public async Task<IActionResult> UpdateAddress([FromRoute]int idPatient, UpdatePatientAddressCommand command)
+        {
+            command.IdPatient = idPatient;
+            var result = await _mediatr.Send(command);
+
+            if (!result.IsSuccess)
+            {
+                if (result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
+
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }
