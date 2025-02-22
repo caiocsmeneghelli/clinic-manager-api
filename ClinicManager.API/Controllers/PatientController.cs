@@ -1,4 +1,5 @@
-﻿using ClinicManager.Application.Commands.Patients.Create;
+﻿using ClinicManager.Application.Commands.Patients.Cancel;
+using ClinicManager.Application.Commands.Patients.Create;
 using ClinicManager.Application.Commands.Patients.Update;
 using ClinicManager.Application.Commands.Patients.UpdateAddress;
 using ClinicManager.Application.Commands.Patients.UpdatePersonalDetail;
@@ -67,6 +68,16 @@ namespace ClinicManager.API.Controllers
 
                 return BadRequest(result);
             }
+
+            return Ok(result);
+        }
+
+        [HttpPut("cancel/{idPatient}")]
+        public async Task<IActionResult> Cancel(int idPatient)
+        {
+            var command = new CancelPatientCommand(idPatient);
+            var result = await _mediatr.Send(command);
+            if (result.IsSuccess == false) { return NotFound(result); }
 
             return Ok(result);
         }
