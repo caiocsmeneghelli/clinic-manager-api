@@ -52,6 +52,9 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
         {
             return await _context.MedicalAppointments
                 .Where(reg => reg.IdDoctor == doctorId)
+                .Include(reg => reg.Doctor)
+                .Include(reg => reg.Patient)
+                .Include (reg => reg.Service)
                 .ToListAsync();
         }
 
