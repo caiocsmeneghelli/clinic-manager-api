@@ -100,7 +100,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("address/{id}")]
-        public async Task<IActionResult> UpdateAddress([FromBody]int id, UpdateDoctorAddressCommand command)
+        public async Task<IActionResult> UpdateAddress([FromRoute]int id, UpdateDoctorAddressCommand command)
         {
             command.IdDoctor = id;
             var result = await _mediator.Send(command);
