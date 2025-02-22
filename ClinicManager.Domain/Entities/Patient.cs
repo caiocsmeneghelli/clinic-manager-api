@@ -23,7 +23,7 @@ namespace ClinicManager.Domain.Entities
         }
 
         [Required]
-        [Column(TypeName ="decimal(5,2)")]
+        [Column(TypeName = "decimal(5,2)")]
         public decimal Height { get; private set; }
         [Required]
         [Column(TypeName = "decimal(5,2)")]
@@ -33,6 +33,11 @@ namespace ClinicManager.Domain.Entities
         public List<MedicalAppointment> MedicalAppointments { get; set; }
         public int IdUser { get; private set; }
         public User User { get; private set; }
+
+        public void Update(decimal height, decimal weight)
+        {
+            Height = height; Weight = weight;
+        }
 
         public void UpdatePersonalDetail(PersonDetail personal)
         {
