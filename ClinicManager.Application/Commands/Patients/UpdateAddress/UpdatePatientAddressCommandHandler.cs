@@ -35,7 +35,7 @@ namespace ClinicManager.Application.Commands.Patients.UpdateAddress
 
             await _unitOfWork.CompleteAsync();
 
-            return Result.Success("Endereço atualizado.");
+            return Result.Success("Endereço atualizado com sucesso.", patient);
         }
     }
 }

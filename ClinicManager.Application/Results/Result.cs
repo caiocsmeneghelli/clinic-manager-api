@@ -16,6 +16,7 @@ namespace ClinicManager.Application.Results
         public static Result Success() => new Result { IsSuccess = true, StatusCode = 200, Messages = new List<string>() };
         public static Result Success(object data) => new Result { IsSuccess = true, StatusCode = 200, Messages = new List<string>(), Data = data };
         public static Result Success(string message) => new Result { IsSuccess = true, StatusCode = 200, Messages = new List<string>() { message } };
+        public static Result Success(string message, object data) => new Result { IsSuccess = true, StatusCode = 200, Data = data, Messages = new List<string>() { message } };
         public static Result NotFound(string message) => new Result { IsSuccess = false, StatusCode = 404, Messages = new List<string>() { message } };
         public static Result BadRequest(string message) => new Result { IsSuccess = false, StatusCode = 400, Messages = new List<string>() { message } };
         public static Result BadRequest(IEnumerable<string> messages) => new Result { IsSuccess = false, StatusCode = 400, Messages = messages };
