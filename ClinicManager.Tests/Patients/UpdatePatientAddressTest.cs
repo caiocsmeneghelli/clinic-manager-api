@@ -58,5 +58,21 @@ namespace ClinicManager.Tests.Patients
             Assert.False(result.IsSuccess);
             Assert.Equal((int)HttpStatusCode.NotFound, result.StatusCode);
         }
+
+        [Fact]
+        public async Task Handler_ShouldReturnError_WhenValidationFail()
+        {
+            // Arrange
+            var command = new UpdatePatientAddressCommand { IdPatient = 1 };
+            _unitOfWorkMock.Setup(u => u.Patients.GetByIdAsync(command.IdPatient)).ReturnsAsync(new Patient());
+            _validatorMock.Setup(v => v.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("PropertyName", "ErrorMessage") }));
+
+            // Act
+            var result = await _handler.Handle(command, CancellationToken.None);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Equal((int)HttpStatusCode.BadRequest, result.StatusCode);
+        }
     }
 }
