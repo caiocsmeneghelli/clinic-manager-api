@@ -35,7 +35,7 @@ namespace ClinicManager.Application.Commands.Doctors.Update
             doctor.UpdateDoctor(request.CRM, request.MedicalEspeciality);
             await _unitOfWork.CompleteAsync();
 
-            return Result.Success("Registro salvo com sucesso.");
+            return Result.Success("Registro salvo com sucesso.", doctor);
         }
     }
 }
