@@ -37,7 +37,7 @@ namespace ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail
             doctor.UpdatePersonalDetail(personalDetail);
             await _unitOfWork.CompleteAsync();
 
-            return Result.Success("Informações pessoais atualizadas.");
+            return Result.Success("Informações pessoais atualizadas.", doctor);
         }
     }
 }
