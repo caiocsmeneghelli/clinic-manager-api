@@ -6,9 +6,11 @@ using ClinicManager.Infrastructure.Auth;
 using ClinicManager.Infrastructure.Persistence.Context;
 using ClinicManager.Infrastructure.Persistence.Repositories;
 using ClinicManager.Infrastructure.Persistence.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,7 @@ namespace ClinicManager.Infrastructure
             services.AddRepositories()
                 .AddUnitOfWork()
                 .AddServices()
+                .AddAuthentication(configuration)
                 .AddDbContext(configuration);
 
             return services;
@@ -55,6 +58,30 @@ namespace ClinicManager.Infrastructure
         }
 
         private static IServiceCollection AddServices(this IServiceCollection services) {
+            services.AddScoped<IAuthService, AuthService>();
+            return services;
+        }
+
+        private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            services
+               .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   options.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidateLifetime = true,
+                       ValidateIssuerSigningKey = true,
+
+                       ValidIssuer = configuration["Jwt:Issuer"],
+                       ValidAudience = configuration["Jwt:Audience"],
+                       IssuerSigningKey = new SymmetricSecurityKey
+                       (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                   };
+               });
+
             services.AddScoped<IAuthService, AuthService>();
             return services;
         }
