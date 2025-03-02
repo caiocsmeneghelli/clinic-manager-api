@@ -24,7 +24,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllPatientQuery();
@@ -33,6 +33,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, Patient")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetPatientByIdQuery(id);
@@ -47,6 +48,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreatePatientCommand command)
         {
             var result = await _mediatr.Send(command);
@@ -59,6 +61,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("{idPatient}")]
+        [Authorize(Roles = "Admin, Patient")]
         public async Task<IActionResult> Update([FromRoute]int idPatient, UpdatePatientCommand command)
         {
             command.IdPatient = idPatient;
@@ -75,6 +78,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("cancel/{idPatient}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cancel(int idPatient)
         {
             var command = new CancelPatientCommand(idPatient);
@@ -85,6 +89,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("personalDetail/{idPatient}")]
+        [Authorize(Roles = "Admin, Patient")]
         public async Task<IActionResult> UpdatePersonal([FromRoute]int idPatient, UpdatePatientPersonalDetailCommand command)
         {
             command.IdPatient = idPatient;
@@ -101,6 +106,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("address/{idPatient}")]
+        [Authorize(Roles = "Admin, Patient")]
         public async Task<IActionResult> UpdateAddress([FromRoute]int idPatient, UpdatePatientAddressCommand command)
         {
             command.IdPatient = idPatient;

@@ -6,6 +6,7 @@ using ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Doctors.GetAll;
 using ClinicManager.Application.Queries.Doctors.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -23,6 +24,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllDoctorsQuery();
@@ -31,6 +33,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetDoctorByIdQuery(id);
@@ -44,6 +47,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateDoctorCommand command)
         {
             var result = await _mediator.Send(command);
@@ -56,6 +60,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("cancel/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cancel(int id)
         {
             var command = new CancelDoctorCommand(id);
@@ -70,6 +75,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> UpdateDoctor([FromRoute]int id, UpdateDoctorCommand command)
         {
             command.IdDoctor = id;
@@ -85,6 +91,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("personalDetail/{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> UpdatePersonalDetail([FromRoute]int id, UpdateDoctorPersonalDetailCommand command)
         {
             command.IdDoctor = id;
@@ -100,6 +107,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("address/{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> UpdateAddress([FromRoute]int id, UpdateDoctorAddressCommand command)
         {
             command.IdDoctor = id;

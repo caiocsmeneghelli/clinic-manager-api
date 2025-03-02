@@ -10,6 +10,6 @@ namespace ClinicManager.Domain.Enums
     {
         Doctor = 1,
         Patient = 2,
-        Receptionist = 3
+        Admin = 3
     }
 }
