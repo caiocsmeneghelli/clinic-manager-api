@@ -6,6 +6,7 @@ using ClinicManager.Application.Commands.Patients.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Patients.GetAll;
 using ClinicManager.Application.Queries.Patients.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -23,6 +24,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllPatientQuery();
