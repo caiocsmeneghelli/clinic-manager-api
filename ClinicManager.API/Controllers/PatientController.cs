@@ -1,14 +1,18 @@
-﻿using ClinicManager.Application.Commands.Patients.Cancel;
+﻿using ClinicManager.API.Extensions;
+using ClinicManager.Application.Commands.Patients.Cancel;
 using ClinicManager.Application.Commands.Patients.Create;
 using ClinicManager.Application.Commands.Patients.Update;
 using ClinicManager.Application.Commands.Patients.UpdateAddress;
 using ClinicManager.Application.Commands.Patients.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Patients.GetAll;
 using ClinicManager.Application.Queries.Patients.GetById;
+using ClinicManager.Application.ViewModel;
+using ClinicManager.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace ClinicManager.API.Controllers
 {
@@ -36,12 +40,25 @@ namespace ClinicManager.API.Controllers
         [Authorize(Roles = "Admin, Patient")]
         public async Task<IActionResult> GetById(int id)
         {
+            var isAdmin = User.IsAdmin();
+            var userName = User.UserName();
+
             var query = new GetPatientByIdQuery(id);
             var result = await _mediatr.Send(query);
-            
-            if(result.IsSuccess == false)
+
+            if (result.IsSuccess == false)
             {
                 return NotFound(result);
+            }
+
+            // Caso nao seja Admin, retornar apenas busca pelo seu usuario.
+            if (!isAdmin)
+            {
+                var patient = (PatientViewModel)result.Data;
+                if (userName == null || userName != patient.Username)
+                {
+                    return Forbid();
+                }
             }
 
             return Ok(result);
@@ -52,7 +69,7 @@ namespace ClinicManager.API.Controllers
         public async Task<IActionResult> Create(CreatePatientCommand command)
         {
             var result = await _mediatr.Send(command);
-            if(result.IsSuccess == false)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -62,14 +79,14 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("{idPatient}")]
         [Authorize(Roles = "Admin, Patient")]
-        public async Task<IActionResult> Update([FromRoute]int idPatient, UpdatePatientCommand command)
+        public async Task<IActionResult> Update([FromRoute] int idPatient, UpdatePatientCommand command)
         {
             command.IdPatient = idPatient;
             var result = await _mediatr.Send(command);
 
             if (!result.IsSuccess)
             {
-                if(result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
+                if (result.StatusCode == (int)HttpStatusCode.NotFound) { return NotFound(result); }
 
                 return BadRequest(result);
             }
@@ -90,7 +107,7 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("personalDetail/{idPatient}")]
         [Authorize(Roles = "Admin, Patient")]
-        public async Task<IActionResult> UpdatePersonal([FromRoute]int idPatient, UpdatePatientPersonalDetailCommand command)
+        public async Task<IActionResult> UpdatePersonal([FromRoute] int idPatient, UpdatePatientPersonalDetailCommand command)
         {
             command.IdPatient = idPatient;
             var result = await _mediatr.Send(command);
@@ -107,7 +124,7 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("address/{idPatient}")]
         [Authorize(Roles = "Admin, Patient")]
-        public async Task<IActionResult> UpdateAddress([FromRoute]int idPatient, UpdatePatientAddressCommand command)
+        public async Task<IActionResult> UpdateAddress([FromRoute] int idPatient, UpdatePatientAddressCommand command)
         {
             command.IdPatient = idPatient;
             var result = await _mediatr.Send(command);

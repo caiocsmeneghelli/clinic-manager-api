@@ -37,6 +37,7 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
         {
             return await _context
                 .Patients
+                .Include(reg => reg.User)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(reg => reg.Id == idPatient);
         }
