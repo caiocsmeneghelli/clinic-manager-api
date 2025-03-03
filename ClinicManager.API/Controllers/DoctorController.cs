@@ -1,10 +1,13 @@
-﻿using ClinicManager.Application.Commands.Doctors.Cancel;
+﻿using ClinicManager.API.Extensions;
+using ClinicManager.Application.Commands.Doctors.Cancel;
 using ClinicManager.Application.Commands.Doctors.Create;
 using ClinicManager.Application.Commands.Doctors.Update;
 using ClinicManager.Application.Commands.Doctors.UpdateAddress;
 using ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail;
 using ClinicManager.Application.Queries.Doctors.GetAll;
 using ClinicManager.Application.Queries.Doctors.GetById;
+using ClinicManager.Application.ViewModel;
+using ClinicManager.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +46,16 @@ namespace ClinicManager.API.Controllers
                 return NotFound(result);
             }
 
+            var isAdmin = User.IsAdmin();
+            if (!isAdmin)
+            {
+                var doctor = (DoctorViewModel)result.Data;
+                var userName = User.UserName();
+                if (userName == null || userName != doctor.UserName)
+                {
+                    return Forbid();
+                }
+            }
             return Ok(result);
         }
 
@@ -76,7 +89,7 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, Doctor")]
-        public async Task<IActionResult> UpdateDoctor([FromRoute]int id, UpdateDoctorCommand command)
+        public async Task<IActionResult> UpdateDoctor([FromRoute] int id, UpdateDoctorCommand command)
         {
             command.IdDoctor = id;
             var result = await _mediator.Send(command);
@@ -92,7 +105,7 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("personalDetail/{id}")]
         [Authorize(Roles = "Admin, Doctor")]
-        public async Task<IActionResult> UpdatePersonalDetail([FromRoute]int id, UpdateDoctorPersonalDetailCommand command)
+        public async Task<IActionResult> UpdatePersonalDetail([FromRoute] int id, UpdateDoctorPersonalDetailCommand command)
         {
             command.IdDoctor = id;
             var result = await _mediator.Send(command);
@@ -108,7 +121,7 @@ namespace ClinicManager.API.Controllers
 
         [HttpPut("address/{id}")]
         [Authorize(Roles = "Admin, Doctor")]
-        public async Task<IActionResult> UpdateAddress([FromRoute]int id, UpdateDoctorAddressCommand command)
+        public async Task<IActionResult> UpdateAddress([FromRoute] int id, UpdateDoctorAddressCommand command)
         {
             command.IdDoctor = id;
             var result = await _mediator.Send(command);

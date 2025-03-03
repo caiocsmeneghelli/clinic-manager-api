@@ -14,5 +14,6 @@ namespace ClinicManager.Application.ViewModel
         public AddressViewModel Address { get; set; }
         public string MedicalSpecialty { get; set; }
         public string CRM { get; set; }
+        public string UserName { get; set; }
     }
 }

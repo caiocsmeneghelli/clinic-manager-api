@@ -17,7 +17,8 @@ namespace ClinicManager.Application.Mapper
                .ForMember(dest => dest.PersonDetail, opt => opt.MapFrom(src => src.PersonDetail))
                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
                .ForMember(dest => dest.CRM, opt => opt.MapFrom(src => src.CRM))
-               .ForMember(dest => dest.MedicalSpecialty, opt => opt.MapFrom(src => src.MedicalSpecialty));
+               .ForMember(dest => dest.MedicalSpecialty, opt => opt.MapFrom(src => src.MedicalSpecialty))
+               .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserLogin));
         }
     }
 }
