@@ -1,4 +1,5 @@
 ﻿using ClinicManager.Application.Results;
+using ClinicManager.Application.ViewModel;
 using ClinicManager.Domain.Services.Auth;
 using ClinicManager.Domain.UnitOfWork;
 using MediatR;
@@ -28,11 +29,17 @@ namespace ClinicManager.Application.Commands.Users.UpdatePassword
             }
 
             user.UpdatePassword(hashNewPassword);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.CompleteAsync();
 
-            // Refresh Token?
+            var newToken = _authService.GenerateJwtToken(user.UserLogin, user.Profile.ToString());
+            var loginViewModel = new LoginViewModel()
+            {
+                Profile = user.Profile,
+                Token = newToken,
+                ResetPasswordRequired = false
+            };
 
-            return Result.Success(user);
+            return Result.Success("Senha alterada com sucesso.", loginViewModel);
         }
     }
 }
