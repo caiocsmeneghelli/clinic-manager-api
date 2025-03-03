@@ -6,6 +6,7 @@ using ClinicManager.Application.Queries.MedicalAppointments.GetAllByDoctor;
 using ClinicManager.Application.Queries.MedicalAppointments.GetAllByPatient;
 using ClinicManager.Application.Queries.MedicalAppointments.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicManager.API.Controllers
@@ -22,6 +23,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllMedicalAppointmentsQuery();
@@ -31,6 +33,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetMedicalAppointmentByIdQuery(id);
@@ -41,6 +44,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("doctor/{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> GetAllByDoctor(int id)
         {
             var query = new GetAllMedicalAppointmentsByDoctorQuery(id);
@@ -49,6 +53,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("patient/{id}")]
+        [Authorize(Roles = "Patient, Admin")]
         public async Task<IActionResult> GetAllByPatient(int id)
         {
             var query = new GetAllMedicalAppointmentsByPatientQuery(id);
@@ -57,6 +62,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateMedicalAppointmentCommand command)
         {
             var result = await _mediatr.Send(command);
@@ -66,6 +72,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("cancel/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cancel(int id)
         {
             var command = new CancelMedicalAppointmentCommand(id);
@@ -79,6 +86,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPut("reschedule/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Reschedule(int id, RescheduleMedicalAppointmentCommand command)
         {
             command.IdAppointment = id;
