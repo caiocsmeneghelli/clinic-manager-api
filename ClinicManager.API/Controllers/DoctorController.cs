@@ -4,10 +4,11 @@ using ClinicManager.Application.Commands.Doctors.Create;
 using ClinicManager.Application.Commands.Doctors.Update;
 using ClinicManager.Application.Commands.Doctors.UpdateAddress;
 using ClinicManager.Application.Commands.Doctors.UpdatePersonalDetail;
+using ClinicManager.Application.Helpers;
 using ClinicManager.Application.Queries.Doctors.GetAll;
 using ClinicManager.Application.Queries.Doctors.GetById;
+using ClinicManager.Application.Queries.Doctors.ListAll;
 using ClinicManager.Application.ViewModel;
-using ClinicManager.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +28,19 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllDoctorsQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("list")]
+        //[Authorize]
+        public async Task<IActionResult> ListAll([FromQuery]PageParams pageParams)
+        {
+            var query = new ListAllDoctorsQuery(pageParams);
             var result = await _mediator.Send(query);
             return Ok(result);
         }
@@ -60,7 +70,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateDoctorCommand command)
         {
             var result = await _mediator.Send(command);

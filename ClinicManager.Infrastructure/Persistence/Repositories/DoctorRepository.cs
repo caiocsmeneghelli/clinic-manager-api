@@ -25,11 +25,10 @@ namespace ClinicManager.Infrastructure.Persistence.Repositories
             return doctor.Id;
         }
 
-        public async Task<List<Doctor>> GetAllAsync()
+        public async Task<IQueryable<Doctor>> GetAllAsync()
         {
-            return await _context.Doctors
-                .AsNoTracking()
-                .ToListAsync();
+            return _context.Doctors
+                .AsQueryable();
         }
 
         public async Task<Doctor?> GetByIdAsNoTrackingAsync(int idDoctor)
