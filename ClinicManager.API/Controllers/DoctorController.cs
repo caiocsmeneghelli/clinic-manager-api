@@ -28,7 +28,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var query = new GetAllDoctorsQuery();
@@ -37,7 +37,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpGet("list")]
-        //[Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ListAll([FromQuery]PageParams pageParams)
         {
             var query = new ListAllDoctorsQuery(pageParams);
@@ -70,7 +70,7 @@ namespace ClinicManager.API.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CreateDoctorCommand command)
         {
             var result = await _mediator.Send(command);

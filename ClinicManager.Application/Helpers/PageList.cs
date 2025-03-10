@@ -1,4 +1,6 @@
-﻿namespace ClinicManager.Application.Helpers
+﻿using MediatR;
+
+namespace ClinicManager.Application.Helpers
 {
     public class PageList<T> : List<T>
     {
@@ -18,5 +20,15 @@
             TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             AddRange(items);
         }
+
+        public static PageList<T> CreatePagination(IQueryable<T> query, int pageNumber, int pageSize) { 
+            var result = query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new PageList<T>(result, pageNumber, pageSize, result.Count);
+        }
+            
     }
 }

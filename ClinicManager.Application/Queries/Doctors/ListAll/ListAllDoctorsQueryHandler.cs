@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClinicManager.Application.Helpers;
 using ClinicManager.Application.ViewModel;
+using ClinicManager.Domain.Entities;
 using ClinicManager.Domain.UnitOfWork;
 using MediatR;
 using System;
@@ -25,12 +26,13 @@ namespace ClinicManager.Application.Queries.Doctors.ListAll
         public async Task<PageList<DoctorViewModel>> Handle(ListAllDoctorsQuery request, CancellationToken cancellationToken)
         {
             var result = await _unitOfWork.Doctors.GetAllAsync();
-            result = result
-                .Skip((request.PageParams.PageNumber - 1) * request.PageParams.PageSize)
-                .Take(request.PageParams.PageSize);
-            var viewModels = _mapper.Map<List<DoctorViewModel>>(result);
+            var pageViewModels = _mapper.ProjectTo<DoctorViewModel>(result);
 
-            return new PageList<DoctorViewModel>(viewModels, request.PageParams.PageNumber, request.PageParams.PageSize, viewModels.Count);
+            var pagination = PageList<DoctorViewModel>
+                .CreatePagination(pageViewModels, request.PageParams.PageNumber, request.PageParams.PageSize);
+
+
+            return pagination;
 
         }
     }
