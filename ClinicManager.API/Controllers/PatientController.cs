@@ -4,8 +4,10 @@ using ClinicManager.Application.Commands.Patients.Create;
 using ClinicManager.Application.Commands.Patients.Update;
 using ClinicManager.Application.Commands.Patients.UpdateAddress;
 using ClinicManager.Application.Commands.Patients.UpdatePersonalDetail;
+using ClinicManager.Application.Helpers;
 using ClinicManager.Application.Queries.Patients.GetAll;
 using ClinicManager.Application.Queries.Patients.GetById;
+using ClinicManager.Application.Queries.Patients.ListAll;
 using ClinicManager.Application.ViewModel;
 using ClinicManager.Domain.Entities;
 using MediatR;
@@ -34,6 +36,15 @@ namespace ClinicManager.API.Controllers
             var query = new GetAllPatientQuery();
             var result = await _mediatr.Send(query);
             return Ok(result);
+        }
+
+        [HttpGet("list")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ListAll([FromQuery] PageParams pageParams)
+        {
+            var query = new ListAllPatientsQuery() { PageSize = pageParams.PageSize, PageNumber = pageParams.PageNumber };
+            var result = await _mediatr.Send(query);
+            return Ok(query);
         }
 
         [HttpGet("{id}")]
